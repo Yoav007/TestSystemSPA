@@ -17,7 +17,7 @@ export function MainMenu() {
             }
         })
     }, []);
-    //blah
+    //hey
     function handleSelect(event) {
         console.log(event.target.value);//remove at the end
         let id = event.target.value;
