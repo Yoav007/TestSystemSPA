@@ -1,0 +1,25 @@
+import logo from './logo.svg';
+import './App.css';
+import { MainMenu } from './components/mainMenu/mainMenu';
+import { Routes, Route} from 'react-router-dom';
+import { ManageQuestions } from './components/manageQuestions/manageQuestions';
+import { ManageTests } from './components/manageTests/manageTests';
+import { ReportsMenu } from './components/reportsMenu/reportsMenu';
+import { ReportByTestMenu } from './components/reportByTestMenu/reportByTestMenu';
+
+
+function App() {
+  return (
+    <div className="App">
+    <Routes>
+      <Route path="/" element={<MainMenu/>}/>
+      <Route path="/manageQuestions/:id" element={<ManageQuestions/>}/>
+      <Route path="/manageTests/:id" element={<ManageTests/>}/>
+      <Route path="/reports/:id" element={<ReportsMenu/>}/>
+      <Route path="/reports/byTest/:id" element={<ReportByTestMenu/>}/>
+    </Routes>
+    </div>
+  );
+}
+
+export default App;
