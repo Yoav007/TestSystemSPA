@@ -11,6 +11,7 @@ export function ManageTests() {
     const questionService = new QuestionService();
     const testService = new TestService();
 
+    // new comment
     useEffect(() => {
         testService.get().then(data => {
             if (data) {
