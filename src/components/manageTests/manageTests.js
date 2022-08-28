@@ -10,6 +10,7 @@ export function ManageTests() {
     const testService = new TestService();
     // const questionsService = new QuestionService();
 
+    // new comment
     useEffect(() => {
         testService.get()
         .then(data => {
