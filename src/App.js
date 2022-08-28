@@ -7,7 +7,7 @@ import { ManageTests } from './components/manageTests/manageTests';
 import { ReportsMenu } from './components/reportsMenu/reportsMenu';
 import { ReportByTestMenu } from './components/reportByTestMenu/reportByTestMenu';
 
-//hi
+
 function App() {
   return (
     <div className="App">
