@@ -10,16 +10,15 @@ export function ManageTests() {
     const testService = new TestService();
     // const questionsService = new QuestionService();
 
-    // new comment
     useEffect(() => {
         testService.get()
-        .then(data => {
-            if(data) {
-                let res = data.filter(d => d.topicId == params.id)
-                setTests(res);
-                console.log(res);
-            }  
-        })
+            .then(data => {
+                if (data) {
+                    let res = data.filter(d => d.topicId == params.id)
+                    setTests(res);
+                    console.log(res);
+                }
+            })
 
     }, [])
     if (tests.length == 0) return <h1>no tests</h1>
