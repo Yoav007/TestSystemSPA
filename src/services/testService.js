@@ -13,7 +13,7 @@ export class TestService {
 
     getByTopicId(id) {
         return this.get()
-            .then((data)=> data.topicId==id)
+            .then((data) => data.topicId == id)
             .then(this.success)
             .catch(this.failure)
     }

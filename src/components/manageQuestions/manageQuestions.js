@@ -27,12 +27,18 @@ export function ManageQuestions() {
                 setTests(result);
             }
         })
-    }, [params.id]);
+    },[]);
 
     function deleteQuestion(id) {
         let newCollection = questions.filter(q => q.id != id);
         questionService.delete(id);
         setQuestions(newCollection);
+    }
+    function showQuestion(id) {
+        console.log("redirect to show question");
+    }
+    function editQuestion(id) {
+        console.log("redirect to edit question");
     }
 
     if (questions.length == 0) return <h3>There are no questions in this topic</h3>
@@ -59,8 +65,8 @@ export function ManageQuestions() {
                             <td>{tests.filter(t=>t.questionsIdCollection.includes(question.id)).length}</td>
                             <td>{question.isActive ? 'true' : 'false'}</td>
                             <td>
-                                <button>Show</button>
-                                <button>Edit</button>
+                                <button onClick={()=>showQuestion(question.id)}>Show</button>
+                                <button onClick={()=>editQuestion(question.id)}>Edit</button>
                                 {question.isActive ? <></> : <button onClick={() => deleteQuestion(question.id)}>Delete</button>}
                             </td>
                         </tr>
