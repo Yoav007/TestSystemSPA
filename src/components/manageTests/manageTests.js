@@ -7,8 +7,7 @@ import './manageTests.scss'
 
 export function ManageTests() {
     const params = useParams();
-    const [tests, setQuestions] = useState([]);
-    const questionService = new QuestionService();
+    const [tests, setTests] = useState([]);
     const testService = new TestService();
 
     useEffect(() => {
@@ -16,7 +15,7 @@ export function ManageTests() {
             if (data) {
                 let result = data.filter(x => x.topicId == params.id);
                 console.log(result);
-                setQuestions(result);
+                setTests(result);
             }
         })
     }, [params.id]);
@@ -44,9 +43,9 @@ export function ManageTests() {
                             <td>{test.id}</td>
                             <td align="center">{test.name}</td>
                             <td align="center">{test.questionsIdCollection.length}</td>
-                            {/*type of test*/}     <td align="center">{test.topicId}</td>
+    {/*type of test*/}     <td align="center">{test.topicId}</td>
                             <td align="center">{test.version}</td>
-                            <td align="center"><button>Edit</button>  {test.isActive ? 'true' : 'false'}</td>
+                            <td align="center"><button>Edit</button>  {test.isActive ? 'active' : 'deactive'}</td>
                         </tr>
                     )}
                 </tbody>
