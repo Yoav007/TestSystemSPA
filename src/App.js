@@ -14,6 +14,8 @@ function App() {
     <Routes>
       <Route path="/" element={<MainMenu/>}/>
       <Route path="/manageQuestions/:id" element={<ManageQuestions/>}/>
+      <Route path="/manageQuestions/edit/:id" element={<ManageQuestions/>}/>
+      <Route path="/manageQuestions/show/:id" element={<ManageQuestions/>}/>
       <Route path="/manageTests/:id" element={<ManageTests/>}/>
       <Route path="/reports/:id" element={<ReportsMenu/>}/>
       <Route path="/reports/byTest/:id" element={<ReportByTestMenu/>}/>
