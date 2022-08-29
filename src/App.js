@@ -7,6 +7,8 @@ import { ManageTests } from './components/manageTests/manageTests';
 import { ReportsMenu } from './components/reportsMenu/reportsMenu';
 import { ReportByTestMenu } from './components/reportByTestMenu/reportByTestMenu';
 import { ShowQuestion } from './components/showQuestion/showQuestion';
+import { CreateTest } from './components/createTest/createTest';
+
 
 //hello
 function App() {
@@ -20,6 +22,7 @@ function App() {
       <Route path="/manageTests/:id" element={<ManageTests/>}/>
       <Route path="/reports/:id" element={<ReportsMenu/>}/>
       <Route path="/reports/byTest/:id" element={<ReportByTestMenu/>}/>
+      <Route path="/createTest/:id" element={<CreateTest/>}/>
     </Routes>
     </div>
   );
