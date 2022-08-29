@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom"
 import { QuestionService } from "../../services/questionService";
 import { TestService } from "../../services/testService";
@@ -8,8 +9,8 @@ import './manageTests.scss'
 export function ManageTests() {
     const params = useParams();
     const [tests, setTests] = useState([]);
-    const questionService = new QuestionService();
     const testService = new TestService();
+    let navigate = useNavigate();
 
     useEffect(() => {
         testService.get().then(data => {
@@ -21,6 +22,9 @@ export function ManageTests() {
         })
     }, [params.id]);
 
+    function createTest(){
+        navigate("/createTest/" + params.id)
+    }
 
     if (tests.length == 0) return <h3>There are no tests in this topic</h3>
     return (
@@ -55,7 +59,7 @@ export function ManageTests() {
             </div>
             <div>
                  <button>back</button>  
-                 <button>create a tets</button> 
+                 <button onClick={()=> createTest()}>create a tets</button> 
             </div>
         </div>
 
