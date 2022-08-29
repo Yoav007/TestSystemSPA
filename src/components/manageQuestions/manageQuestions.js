@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { QuestionService } from "../../services/questionService";
 import { TestService } from "../../services/testService";
 import './manageQuestions.scss';
@@ -11,6 +11,7 @@ export function ManageQuestions() {
     const [tests, setTests] = useState([]);
     const questionService = new QuestionService();
     const testService = new TestService();
+    const navigate = useNavigate();
 
     useEffect(() => {
         questionService.get().then(data => {
@@ -27,7 +28,7 @@ export function ManageQuestions() {
                 setTests(result);
             }
         })
-    },[]);
+    }, []);
 
     function deleteQuestion(id) {
         let newCollection = questions.filter(q => q.id != id);
@@ -36,6 +37,7 @@ export function ManageQuestions() {
     }
     function showQuestion(id) {
         console.log("redirect to show question");
+        navigate("/manageQuestions/show/" + id)
     }
     function editQuestion(id) {
         console.log("redirect to edit question");
@@ -62,11 +64,11 @@ export function ManageQuestions() {
                             <td>{question.id}</td>
                             <td>{question.text}</td>
                             <td>{question.isSingle ? 'Single' : 'Multi'}</td>
-                            <td>{tests.filter(t=>t.questionsIdCollection.includes(question.id)).length}</td>
+                            <td>{tests.filter(t => t.questionsIdCollection.includes(question.id)).length}</td>
                             <td>{question.isActive ? 'true' : 'false'}</td>
                             <td>
-                                <button onClick={()=>showQuestion(question.id)}>Show</button>
-                                <button onClick={()=>editQuestion(question.id)}>Edit</button>
+                                <button onClick={() => showQuestion(question.id)}>Show</button>
+                                <button onClick={() => editQuestion(question.id)}>Edit</button>
                                 {question.isActive ? <></> : <button onClick={() => deleteQuestion(question.id)}>Delete</button>}
                             </td>
                         </tr>
