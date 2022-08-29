@@ -10,6 +10,7 @@ export function ManageTests() {
     const [tests, setTests] = useState([]);
     const testService = new TestService();
 
+    // new comment
     useEffect(() => {
         testService.get().then(data => {
             if (data) {
