@@ -11,7 +11,6 @@ export function ManageQuestions() {
     const [tests, setTests] = useState([]);
     const questionService = new QuestionService();
     const testService = new TestService();
-    let num;
 
     useEffect(() => {
         questionService.get().then(data => {
