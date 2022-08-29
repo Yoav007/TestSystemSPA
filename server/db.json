@@ -661,7 +661,9 @@
       ],
       "name": "Math 1",
       "isActive": true,
-      "passingGrade": 60
+      "passingGrade": 60,
+      "version": 1,
+      "introText": "bla"
     },
     {
       "id": 2,
@@ -673,7 +675,9 @@
       ],
       "name": "Trivia 1",
       "isActive": true,
-      "passingGrade": 60
+      "passingGrade": 60,
+      "version": 1,
+      "introText": "bla"
     },
     {
       "id": 3,
@@ -685,7 +689,9 @@
       ],
       "name": "Math 2",
       "isActive": true,
-      "passingGrade": 60
+      "passingGrade": 60,
+      "version": 1,
+      "introText": "bla"
     }
   ],
   "TestResults": [
