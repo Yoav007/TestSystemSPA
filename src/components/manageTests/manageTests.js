@@ -8,9 +8,9 @@ import './manageTests.scss'
 export function ManageTests() {
     const params = useParams();
     const [tests, setTests] = useState([]);
+    const questionService = new QuestionService();
     const testService = new TestService();
 
-    // new comment
     useEffect(() => {
         testService.get().then(data => {
             if (data) {
