@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom"
 import { QuestionService } from "../../services/questionService";
 import { TestService } from "../../services/testService";
@@ -8,8 +9,8 @@ import './manageTests.scss'
 export function ManageTests() {
     const params = useParams();
     const [tests, setTests] = useState([]);
-    const questionService = new QuestionService();
     const testService = new TestService();
+    let navigate = useNavigate();
 
     useEffect(() => {
         testService.get().then(data => {
@@ -21,36 +22,46 @@ export function ManageTests() {
         })
     }, [params.id]);
 
+    function createTest(){
+        navigate("/createTest/" + params.id)
+    }
 
     if (tests.length == 0) return <h3>There are no tests in this topic</h3>
     return (
-        <div className="testsList">
-            <h3>Tests:</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Test name</th>
-                        <th>number of question</th>
-                        <th>Type</th>
-                        <th>Version</th>
-                        <th>Actions</th>
-                        <th>last update</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {tests.map((test) =>
-                        <tr key={test.id}>
-                            <td>{test.id}</td>
-                            <td align="center">{test.name}</td>
-                            <td align="center">{test.questionsIdCollection.length}</td>
-    {/*type of test*/}     <td align="center">{test.topicId}</td>
-                            <td align="center">{test.version}</td>
-                            <td align="center"><button>Edit</button>  {test.isActive ? 'active' : 'deactive'}</td>
+        <div>
+            <div className="testsList">
+                <h3>Tests:</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Test name</th>
+                            <th>number of question</th>
+                            <th>Type</th>
+                            <th>Version</th>
+                            <th>Actions</th>
+                            <th>last update</th>
                         </tr>
-                    )}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {tests.map((test) =>
+                            <tr key={test.id}>
+                                <td>{test.id}</td>
+                                <td align="center">{test.name}</td>
+                                <td align="center">{test.questionsIdCollection.length}</td>
+        {/*type of test*/}      <td align="center">{test.topicId}</td>
+                                <td align="center">{test.version}</td>
+                                <td align="center"><button>Edit</button>  {test.isActive ? 'active' : 'deactive'}</td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                 <button>back</button>  
+                 <button onClick={()=> createTest()}>create a tets</button> 
+            </div>
         </div>
+
     )
 }
