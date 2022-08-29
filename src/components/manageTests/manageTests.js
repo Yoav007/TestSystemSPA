@@ -7,7 +7,7 @@ import './manageTests.scss'
 
 export function ManageTests() {
     const params = useParams();
-    const [tests, setQuestions] = useState([]);
+    const [tests, setTests] = useState([]);
     const questionService = new QuestionService();
     const testService = new TestService();
 
@@ -16,7 +16,7 @@ export function ManageTests() {
             if (data) {
                 let result = data.filter(x => x.topicId == params.id);
                 console.log(result);
-                setQuestions(result);
+                setTests(result);
             }
         })
     }, [params.id]);
