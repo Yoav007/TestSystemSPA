@@ -27,7 +27,7 @@
         "basic",
         "addition"
       ],
-      "isActive": false,
+      "isActive": true,
       "id": 1
     },
     {
@@ -57,7 +57,7 @@
         "basic",
         "addition"
       ],
-      "isActive": false,
+      "isActive": true,
       "id": 2
     },
     {
@@ -87,7 +87,7 @@
         "basic",
         "subtraction"
       ],
-      "isActive": false,
+      "isActive": true,
       "id": 3
     },
     {
@@ -483,7 +483,7 @@
         "basic",
         "bilogic"
       ],
-      "isActive": false,
+      "isActive": true,
       "id": 16
     },
     {
@@ -513,7 +513,7 @@
         "basic",
         "bible"
       ],
-      "isActive": false,
+      "isActive": true,
       "id": 17
     },
     {
@@ -543,7 +543,7 @@
         "basic",
         "T.V."
       ],
-      "isActive": false,
+      "isActive": true,
       "id": 18
     },
     {
