@@ -75,6 +75,7 @@ export function ManageQuestions() {
                     )}
                 </tbody>
             </table>
+            <button onClick={()=>navigate("/")}>Go Back</button>
         </div>
     )
 }

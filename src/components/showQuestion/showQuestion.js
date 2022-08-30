@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { QuestionService } from "../../services/questionService";
 import TopicService from "../../services/topicService";
 import './showQuestion.scss'
@@ -10,6 +10,7 @@ export function ShowQuestion() {
     const [topic, setTopic] = useState("");
     const questionService = new QuestionService();
     const topicService = new TopicService();
+    const navigate = useNavigate();
 
     useEffect(() => {
         questionService.getById(params.id)
@@ -34,15 +35,11 @@ export function ShowQuestion() {
             {question.answers.map((answer, index) =>
                 <p key={index}>({index + 1}) <span className={answer.isCorrect ? 'isCorrect' : ''}>{answer.text}</span></p>)}
             <h2>Type: {question.isSingle ? 'Single' : 'Multi'}</h2>
-            {/* {question.tags.forEach(tag => {
-                console.log(tag);
-                <p>{tag}</p>
-            })} */}
             <h2>Tags:</h2>
-            {question.tags.map((tag, index) => {
-                console.log(tag);
+            {question.tags.map((tag, index) =>
                 <p key={index}>{tag}</p>
-            })}
+            )}
+            <button onClick={() => navigate("/manageQuestions/" + topic.id)}>Go Back</button>
         </div>
     )
     return (
