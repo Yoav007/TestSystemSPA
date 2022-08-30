@@ -19,10 +19,8 @@ export function MainMenu() {
     }, []);
     //hey
     function handleSelect(event) {
-        console.log(event.target.value);//remove at the end
         let id = event.target.value;
         let choice = topics.filter(x => x.id == id);
-        console.log(choice[0]);//remove at the end
         if (!show) setShow(true);
         setCurrentTopic(choice[0]);
     };
@@ -43,7 +41,7 @@ export function MainMenu() {
             <select defaultValue={"Select Topic"} onChange={(event) => handleSelect(event)}>
                 <option hidden>Select topic</option>
                 {topics.map((topic) =>
-                    <option key={topic.id} value={topic.id} >{topic.name}</option>)}
+                    <option key={topic.id} value={topic.id}>{topic.name}</option>)}
             </select>
             <div style={{ visibility: show ? '' : 'hidden' }}>
                 <p onClick={() => goToQuestions()}>Manage Questions</p>
