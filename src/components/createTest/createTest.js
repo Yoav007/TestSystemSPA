@@ -9,22 +9,22 @@ export function CreateTest() {
 
     const testService = new TestService();
     const questionsService = new QuestionService();
-    const topicService = new TopicService();
+    //const topicService = new TopicService();
     const params = useParams();
-    const [questionsArray, setQuestions] = useState([]);
+    const [allQuestions, setAllQuestions] = useState([]);
     //const [topics, setTopics] = useState([]);
     const navigate = useNavigate();
     let testName = useRef("");
     let introText = useRef("");
     let passingGrade = useRef(0);
-    let questions = useRef([]);
+    const [questions, setQuestions] = useState([]);
 
     useEffect(() => {
         questionsService.get().then(data => {
             if (data) {
                 let result = data.filter(q => q.topicId == params.id);
                 console.log(result);
-                setQuestions(result);
+                setAllQuestions(result);
             }
         });
 
@@ -35,6 +35,25 @@ export function CreateTest() {
         //     }
         // });
     }, [params.id]);
+
+    function addToTest(id){
+        let coppy = questions;
+        let selected; 
+        questionsService.getById(id)
+        .then(q => {
+            if(q){
+                selected = q;
+            }
+        })
+        if (!questions.includes(selected)){
+            coppy.push(selected);
+        }
+        else{
+            coppy = coppy.filter(q=> q.id !== id);
+        }
+        setQuestions(coppy);
+        console.log(questions);
+    }
 
     function addTest() {
         const test = {
@@ -51,7 +70,7 @@ export function CreateTest() {
     }
 
     return (
-        <div>
+        <div className='createTest'>
             <h2>Create new test</h2>
             <div>
                 <label>
@@ -75,18 +94,16 @@ export function CreateTest() {
             </div>
             <br />
             <div>
-                <h2>qustions</h2>
+                <h2>qustions (click to add the question to the test)</h2>
                 <table className='table'>
                     <thead>
                         <tr>
-                            <th>select question</th>
                             <th>question</th>
                         </tr>
                     </thead>
                     <tbody>
-                    {questionsArray.map((question) =>
-                                <tr key={question.id}>
-                                   <td><input type="checkbox" value={question.id}></input></td> 
+                    {allQuestions.map((question) =>
+                                <tr key={question.id} onClick={()=> addToTest(question.id)}>                                   
                                    <td>{question.text}</td>
                                 </tr>)}
                     </tbody>
