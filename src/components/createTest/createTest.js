@@ -1,12 +1,11 @@
 import { useRef, useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { QuestionService } from '../../services/questionService';
-import { TestService } from '../../services/testService';
-import TopicService from '../../services/topicService';
+import { QuestionService } from "../../services/questionService";
+import { TestService } from "../../services/testService";
+import {TopicService} from '../../services/topicService';
 import './createTest.scss';
 
 export function CreateTest() {
-
     const testService = new TestService();
     const questionsService = new QuestionService();
     //const topicService = new TopicService();
@@ -38,21 +37,17 @@ export function CreateTest() {
 
     function addToTest(id){
         let coppy = questions;
-        let selected; 
-        questionsService.getById(id)
-        .then(q => {
-            if(q){
-                selected = q;
-            }
-        })
+        let selected = coppy.find(q  => q.id == id); 
+        console.log(selected);
         if (!questions.includes(selected)){
             coppy.push(selected);
         }
         else{
             coppy = coppy.filter(q=> q.id !== id);
         }
-        setQuestions(coppy);
-        console.log(questions);
+        // console.log(coppy);
+        // setQuestions(coppy);
+        // console.log(questions);
     }
 
     function addTest() {
