@@ -7,11 +7,9 @@ import './createTest.scss';
 export function CreateTest() {
     const testService = new TestService();
     const questionsService = new QuestionService();
-    //const topicService = new TopicService();
     const params = useParams();
     const [allQuestions, setAllQuestions] = useState([]);
-    //const [topics, setTopics] = useState([]);
-    const [questions, setQuestions] = useState([]);
+    const [testQuestions, setQuestions] = useState([]);
     const navigate = useNavigate();
     let testName = useRef("");
     let introText = useRef("");
@@ -25,20 +23,13 @@ export function CreateTest() {
                 setAllQuestions(result);
             }
         });
-
-        // topicService.get().then(data => {
-        //     if (data) {
-        //         let result = data.filter(t=> t.topicId == params.id);
-        //         setTopics(result);
-        //     }
-        // });
     }, [params.id]);
 
-    function addToTest(id) {
-        let coppy = questions;
+    function addToTest(id) {        
+        let coppy = testQuestions;
         let selected = allQuestions.find(q => q.id == id);
 
-        if (!questions.includes(selected)) {
+        if (!testQuestions.includes(selected)) {
             coppy.push(selected);
         }
         else {
@@ -46,8 +37,7 @@ export function CreateTest() {
         }
 
         console.log(coppy);
-        setQuestions(coppy);
-        console.log(questions);
+        setQuestions([...coppy]);
     }
 
     function back() {
@@ -55,13 +45,13 @@ export function CreateTest() {
     }
 
     function addTest() {
-        const test = {
-            name: testName.current.value,
-            intro: introText.current.value,
-            passGrade: passingGrade.current.value,
+        let test = {
+            name: testName.current.valueOf(),
+            intro: introText.current.valueOf(),
+            passGrade: passingGrade.current.valueOf(),
             version: 1,
             isActive: false,
-            questionsIdCollection: questions.current.value,
+            questionsIdCollection: testQuestions.current.valueof(),
             topicId: params.id
         }
         testService.post(test);
@@ -107,7 +97,6 @@ export function CreateTest() {
                             </tr>)}
                     </tbody>
                 </table>
-
             </div>
             <div>
                 <button onClick={addTest}>add Test</button>

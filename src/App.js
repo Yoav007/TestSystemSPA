@@ -9,6 +9,7 @@ import { ReportByTestMenu } from './components/reportByTestMenu/reportByTestMenu
 import { ShowQuestion } from './components/manageQuestions/showQuestion/showQuestion';
 import { EditQuestion } from './components/manageQuestions/questionEditPage/editQuestion';
 import { CreateTest } from './components/manageTests/createTest/createTest';
+import { EditTest } from './components/manageTests/editTest/editTest';
 
 
 //hello
@@ -21,9 +22,10 @@ function App() {
         <Route path="/manageQuestions/edit/:id" element={<EditQuestion />} />
         <Route path="/manageQuestions/show/:id" element={<ShowQuestion />} />
         <Route path="/manageTests/:id" element={<ManageTests />} />
+        <Route path="/createTest/:id" element={<CreateTest />} />
+        <Route path="/manageTest/editTest/:id" element={<EditTest/>}/>
         <Route path="/reports/:id" element={<ReportsMenu />} />
         <Route path="/reports/byTest/:id" element={<ReportByTestMenu />} />
-        <Route path="/createTest/:id" element={<CreateTest />} />
       </Routes>
     </div>
   );
