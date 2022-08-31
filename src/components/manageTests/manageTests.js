@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom"
-import { QuestionService } from "../../services/questionService";
 import { TestService } from "../../services/testService";
 import './manageTests.scss'
 
