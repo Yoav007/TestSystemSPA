@@ -660,7 +660,7 @@
         3
       ],
       "name": "Math 1",
-      "isActive": true,
+      "isActive": false,
       "passingGrade": 60,
       "version": 1,
       "introText": "bla"
@@ -674,7 +674,7 @@
         18
       ],
       "name": "Trivia 1",
-      "isActive": true,
+      "isActive": false,
       "passingGrade": 60,
       "version": 1,
       "introText": "bla"
