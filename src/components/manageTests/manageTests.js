@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom"
-import { QuestionService } from "../../services/questionService";
 import { TestService } from "../../services/testService";
 import './manageTests.scss'
 
@@ -22,8 +21,22 @@ export function ManageTests() {
         })
     }, [params.id]);
 
-    function createTest(){
+    function deleteTest(id) {
+        let newCollection = tests.filter(q => q.id != id);
+        testService.delete(id);
+        setTests(newCollection);
+    }
+
+    function createTest() {
         navigate("/createTest/" + params.id)
+    }
+
+    function back() {
+        navigate("/");
+    }
+
+    function edit(id) {
+        navigate("/manageTest/editTest/" + id);
     }
 
     if (tests.length == 0) return <h3>There are no tests in this topic</h3>
@@ -49,17 +62,19 @@ export function ManageTests() {
                                 <td>{test.id}</td>
                                 <td align="center">{test.name}</td>
                                 <td align="center">{test.questionsIdCollection.length}</td>
-        {/*type of test*/}      <td align="center">{test.topicId}</td>
+                                {/*type of test*/}      <td align="center">{test.topicId}</td>
                                 <td align="center">{test.version}</td>
-                                <td align="center"><button>Edit</button>  {test.isActive ? 'active' : 'deactive'}</td>
+                                <td align="center">{test.isActive ? "" : <button onClick={() => edit(test.id)}>Edit</button>}
+                                    {test.isActive ? "" : <button onClick={() => deleteTest(test.id)}>delete</button>}
+                                    {test.isActive ? 'active' : 'deactive'}</td>
                             </tr>
                         )}
                     </tbody>
                 </table>
             </div>
             <div>
-                 <button>back</button>  
-                 <button onClick={()=> createTest()}>create a tets</button> 
+                <button onClick={() => back()}>back</button>
+                <button onClick={() => createTest()}>create a tets</button>
             </div>
         </div>
 
