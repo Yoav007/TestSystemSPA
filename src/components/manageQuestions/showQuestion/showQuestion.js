@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { QuestionService } from "../../services/questionService";
-import TopicService from "../../services/topicService";
+import { QuestionService } from "../../../services/questionService";
+import TopicService from "../../../services/topicService";
 import './showQuestion.scss'
 
 export function ShowQuestion() {
