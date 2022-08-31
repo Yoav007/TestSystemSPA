@@ -13,7 +13,7 @@ export function ReportsMenu(){
     }
 
     function reportByStudent(){
-        navigate("/reports/byStudent")
+        navigate("/reports/byStudent/" + params.id);
     }
 
     return (
