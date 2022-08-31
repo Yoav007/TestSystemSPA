@@ -1,8 +1,7 @@
 import { useRef, useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { QuestionService } from '../../services/questionService';
-import { TestService } from '../../services/testService';
-import TopicService from '../../services/topicService';
+import { QuestionService } from '../../../services/questionService';
+import { TestService } from '../../../services/testService';
 import './createTest.scss';
 
 export function CreateTest() {

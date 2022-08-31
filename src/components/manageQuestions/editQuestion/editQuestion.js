@@ -5,6 +5,7 @@ import { QuestionService } from "../../../services/questionService";
 export function EditQuestion() {
     const params = useParams();
     const [question, setQuestion] = useState("");
+    const [answers, setAnswers] = useState([]);
     const questionService = new QuestionService();
 
     let text = useRef("");
@@ -17,13 +18,21 @@ export function EditQuestion() {
             .then(q => {
                 console.log(q);
                 setQuestion(q);
+                setAnswers(q.answers);
             });
     }, [])
 
+    function updateAnswerText(event, answer) {
+        answer.text = event.target.value;
+        setAnswers([...answers]);
+    }
+    function updateAnswerIsCorrect(answer) {
+        answer.isCorrect = !answer.isCorrect;
+        setAnswers([...answers]);
+    }
+
     function editQuestion() {
         let textArr = [];
-        console.log("blah" + textArr.at(2));
-        console.log(answersText.current.values);
         for (let index = 0; index < question.answers.length; index++) {
             const ans = {
                 text: answersText.current.at(index),
@@ -38,7 +47,7 @@ export function EditQuestion() {
             text: text.current.value,
             isSingle: question.isSingle,
             topicId: question.topicId,
-            answers: textArr,
+            answers: answers,
             tags: myTags,
             isActive: question.isActive
         }
@@ -52,14 +61,16 @@ export function EditQuestion() {
         <div>
             <div>
                 <label>Question's text</label>
-                <input type="text" ref={text} />
+                <input type="text" ref={text} defaultValue={question.text} />
             </div>
             <div>
                 <label>Question's answers</label>
-                {question.answers.map((answer, index) => {
+                {answers.map((answer, index) => {
                     return <div key={index}>
                         <label>Answer {index + 1}:</label>
-                        <input type="text" ref={answersText[index]} />
+                        <input type="text" onChange={(e) => updateAnswerText(e, answer)} value={answer.text} />
+                        <label>Correct?</label>
+                        <input type="checkbox" checked={answer.isCorrect} onChange={(e) => updateAnswerIsCorrect(e, answer)} />
                     </div>
                 })}
             </div>
