@@ -1,12 +1,10 @@
 import { useRef, useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { QuestionService } from '../../services/questionService';
-import { TestService } from '../../services/testService';
-import TopicService from '../../services/topicService';
+import { QuestionService } from '../../../services/questionService.js';
+import { TestService } from '../../../services/testService'
 import './createTest.scss';
 
 export function CreateTest() {
-
     const testService = new TestService();
     const questionsService = new QuestionService();
     //const topicService = new TopicService();
@@ -36,22 +34,23 @@ export function CreateTest() {
         // });
     }, [params.id]);
 
-    function addToTest(id){
+    function addToTest(id) {
         let coppy = questions;
-        let selectedQ = allQuestions.find(x => x.id==id);        
-        
-        if (!questions.includes(selectedQ)){
-            coppy.push(selectedQ);
+        let selected = allQuestions.find(q => q.id == id);
+
+        if (!questions.includes(selected)) {
+            coppy.push(selected);
         }
-        else{
-            coppy = coppy.filter(q=> q.id != id);            
+        else {
+            coppy = coppy.filter(q => q.id != id);
         }
+
         console.log(coppy);
         setQuestions(coppy);
         console.log(questions);
     }
 
-    function back(){
+    function back() {
         navigate("/manageTests/" + params.id)
     }
 
@@ -102,17 +101,17 @@ export function CreateTest() {
                         </tr>
                     </thead>
                     <tbody>
-                    {allQuestions.map((question) =>
-                                <tr key={question.id} onClick={()=> addToTest(question.id)}>                                   
-                                   <td>{question.text}</td>
-                                </tr>)}
+                        {allQuestions.map((question) =>
+                            <tr key={question.id} onClick={() => addToTest(question.id)}>
+                                <td>{question.text}</td>
+                            </tr>)}
                     </tbody>
                 </table>
 
             </div>
             <div>
-            <button onClick={addTest}>add Test</button>
-            <button onClick={()=>back()}>back</button>
+                <button onClick={addTest}>add Test</button>
+                <button onClick={() => back()}>back</button>
             </div>
         </div>
     )
