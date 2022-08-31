@@ -76,7 +76,8 @@ export function ManageQuestions() {
                     )}
                 </tbody>
             </table>
-            <button onClick={()=>navigate("/")}>Go Back</button>
+            <button onClick={() => navigate("/")}>Go Back</button>
+            <button onClick={() => navigate("/manageQuestions/add/" + params.id)}>Add Question</button>
         </div>
     )
 }
