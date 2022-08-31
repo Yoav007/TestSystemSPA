@@ -1,8 +1,7 @@
 import { useRef, useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { QuestionService } from "../../services/questionService";
-import { TestService } from "../../services/testService";
-import {TopicService} from '../../services/topicService';
+import { QuestionService } from '../../../services/questionService.js';
+import { TestService } from '../../../services/testService'
 import './createTest.scss';
 
 export function CreateTest() {
@@ -12,11 +11,11 @@ export function CreateTest() {
     const params = useParams();
     const [allQuestions, setAllQuestions] = useState([]);
     //const [topics, setTopics] = useState([]);
+    const [questions, setQuestions] = useState([]);
     const navigate = useNavigate();
     let testName = useRef("");
     let introText = useRef("");
     let passingGrade = useRef(0);
-    const [questions, setQuestions] = useState([]);
 
     useEffect(() => {
         questionsService.get().then(data => {
@@ -35,19 +34,24 @@ export function CreateTest() {
         // });
     }, [params.id]);
 
-    function addToTest(id){
+    function addToTest(id) {
         let coppy = questions;
-        let selected = coppy.find(q  => q.id == id); 
-        console.log(selected);
-        if (!questions.includes(selected)){
+        let selected = allQuestions.find(q => q.id == id);
+
+        if (!questions.includes(selected)) {
             coppy.push(selected);
         }
-        else{
-            coppy = coppy.filter(q=> q.id !== id);
+        else {
+            coppy = coppy.filter(q => q.id != id);
         }
-        // console.log(coppy);
-        // setQuestions(coppy);
-        // console.log(questions);
+
+        console.log(coppy);
+        setQuestions(coppy);
+        console.log(questions);
+    }
+
+    function back() {
+        navigate("/manageTests/" + params.id)
     }
 
     function addTest() {
@@ -97,15 +101,18 @@ export function CreateTest() {
                         </tr>
                     </thead>
                     <tbody>
-                    {allQuestions.map((question) =>
-                                <tr key={question.id} onClick={()=> addToTest(question.id)}>                                   
-                                   <td>{question.text}</td>
-                                </tr>)}
+                        {allQuestions.map((question) =>
+                            <tr key={question.id} onClick={() => addToTest(question.id)}>
+                                <td>{question.text}</td>
+                            </tr>)}
                     </tbody>
                 </table>
 
             </div>
-            <button onClick={addTest}>add Test</button>
+            <div>
+                <button onClick={addTest}>add Test</button>
+                <button onClick={() => back()}>back</button>
+            </div>
         </div>
     )
 }
