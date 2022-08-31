@@ -51,11 +51,14 @@ export function EditTest() {
         setQuestions([...coppy]);
     }
 
-    
+    function updateName(event){        
+        let name = event.target.value;
+        setName(name);
+    }
        
     function editTest() {
         let test = {
-            name: testName.current.valueOf(), //testName?
+            name: testName,
             intro: introText.current.valueOf(),
             passGrade: passingGrade.current.valueOf(),
             version: test.version + 1,
@@ -75,7 +78,7 @@ export function EditTest() {
             <div>
                 <label>
                     Name:
-                    <input type="text" ref={testName} /*onChange={()}*//>
+                    <input type="text" ref={testName} onChange={(event)=>updateName(event)}/>
                 </label>
             </div>
             <br/>
