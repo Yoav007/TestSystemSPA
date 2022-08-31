@@ -41,6 +41,7 @@ export function ManageQuestions() {
     }
     function editQuestion(id) {
         console.log("redirect to edit question");
+        navigate("/manageQuestions/edit/" + id)
     }
 
     if (questions.length == 0) return <h3>There are no questions in this topic</h3>
