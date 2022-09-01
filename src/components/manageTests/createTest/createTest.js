@@ -21,6 +21,7 @@ export function CreateTest() {
     useEffect(() => {
         questionsService.get().then(data => {
             if (data) {
+                
                 let result = data.filter(q => q.topicId == params.id);
                 console.log(result);
                 setAllQuestions(result);
@@ -90,8 +91,8 @@ export function CreateTest() {
             successText: successText,
             failureText: failureText
         }
-        testService.post(test);
-        navigate("/manageTests/" + params.id)
+        testService.post(test)
+        .then(navigate("/manageTests/" + params.id));        
     }
 
     return (
@@ -154,7 +155,7 @@ export function CreateTest() {
                 </label>
             </div>
             <div>
-                <button onClick={()=>addTestToDb}>add Test</button>
+                <button onClick={()=>addTestToDb()}>add Test</button>
                 <button onClick={() => back()}>back</button>
             </div>
         </div>

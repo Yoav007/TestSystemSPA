@@ -36,7 +36,7 @@ export function ManageTests() {
     }
 
     function edit(id) {
-        navigate("/manageTest/editTest/" + id);
+        navigate(`/manageTest/editTest/${id}/${params.id}`);
     }
 
     if (tests.length == 0) return <h3>There are no tests in this topic</h3>

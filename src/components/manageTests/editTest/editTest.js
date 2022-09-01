@@ -29,9 +29,10 @@ export function EditTest() {
     }, []);
     
     useEffect(()=> {
+        console.log(params);
         questionService.get().then(data => {
             if (data) {
-                let result = data.filter(q => q.topicId == params.id);
+                let result = data.filter(q => q.topicId === parseInt(params.topicId));
                 setAllQuestions(result);
             }
         })
@@ -50,8 +51,9 @@ export function EditTest() {
 
         console.log(coppy);
         setQuestions([...coppy]);
+        console.log(allQuestions);
     }
-
+    
     function updateFailure(event){
         let failure = event.target.value;
         setFailure(failure);
@@ -152,7 +154,7 @@ export function EditTest() {
                         </tr>
                     </thead>
                     <tbody>
-                        {allQuestions.map((question)=>
+                        {allQuestions.map((question)=>                        
                         <tr key={question.id} onClick={()=>addToTest(question.id)}>
                             <td>{question.text}</td>
                         </tr>)}
