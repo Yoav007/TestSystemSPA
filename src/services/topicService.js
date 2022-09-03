@@ -1,45 +1,52 @@
+import axios from "axios";
+
 class TopicService {
     get() {
-        return fetch("http://localhost:3030/Topics")
-            .then(this.success)
+        return axios.get("http://localhost:4040/tpics")
+            .then(function (response){
+                return response.data})
             .catch(this.failure)
     }
 
     getById(id) {
-        return fetch("http://localhost:3030/Topics/" + id)
-            .then(this.success)
+        return axios.get("http://localhost:4040/topics/" + id)
+            .then(function (response){
+                return response.data})
             .catch(this.failure)
     }
 
     post(item) {
-        return fetch("http://localhost:3030/Topics", {
+        return axios.post("http://localhost:4040/topics", {
             method: "POST",
             body: JSON.stringify(item),
             headers: {
                 'Content-Type': 'application/json'
             }
         })
-            .then(this.success)
+            .then(function (response){
+                return response.item})
             .catch(this.failure)
     }
 
     put(id, item) {
-        return fetch("http://localhost:3030/Topics/" + id, {
+        return axios.put("http://localhost:4040/topics/" + id, {
             method: "PUT",
             body: JSON.stringify(item),
             headers: {
                 'Content-Type': 'application/json'
             }
         })
-            .then(this.success)
+            .then(function (response){
+                return response.data})
             .catch(this.failure)
     }
 
     delete(id) {
-        return fetch("http://localhost:3030/Topics/" + id, {
+        return axios.delete("http://localhost:4040/topics/" + id, {
             method: "DELETE"
         })
-            .then(this.success)
+            .then(function (response){
+                return response.data})
             .catch(this.failure)
     }
 

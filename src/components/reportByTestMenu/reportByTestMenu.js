@@ -46,7 +46,7 @@ export function ReportByTestMenu() {
                     <option key={test.id} value={test.id} >{test.name}</option>)}
             </select>
             <br />
-            no test choose
+            no tests
         </>
     )
 }

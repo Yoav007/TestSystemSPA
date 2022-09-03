@@ -13,7 +13,7 @@ export function ReportsMenu(){
     }
 
     function reportByStudent(){
-        navigate("/reports/byStudent/" + params.id);
+        navigate("/reports/byStudent/" );
     }
 
     return (

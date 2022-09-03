@@ -14,10 +14,10 @@ export function ManageQuestions() {
     const navigate = useNavigate();
 
     useEffect(() => {
+        
         questionService.get().then(data => {
             if (data) {
                 let result = data.filter(q => q.topicId == params.id);
-                console.log(result);
                 setQuestions(result);
             }
         });
