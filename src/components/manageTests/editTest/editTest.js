@@ -101,6 +101,7 @@ export function EditTest() {
             successText: successText,
             failureText: failureText
         }
+        navigate("/manageTest/" + params.id);
     }
 
     function back() {
