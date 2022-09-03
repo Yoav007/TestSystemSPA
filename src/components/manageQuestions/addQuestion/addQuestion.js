@@ -1,47 +1,45 @@
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useParams } from "react-router-dom";
+import { QuestionService } from "../../../services/questionService";
 
 export function AddQuestion() {
-
     const params = useParams();
+    const [text, setText] = useState("");
+    const [answers, setAnswers] = useState([]);
     const [numOfAnswers, setNumOfAnswers] = useState(4);
-    let text = useRef();
-    let number = useRef(4);
-    let answersText = useRef([]);
-    let answersCorrect = useRef([]);
-    let tags = useRef([]);
+    const questionService = new QuestionService();
 
-    function addQuestion() {
-        let qTags = tags.current.values.split(" ");
-        let question = {
-            topicId: params.topicId,
-            tags: qTags,
-        }
+    function handleNumber(event) {
+        setNumOfAnswers(event.target.value);
+        console.log(event.target.value);
+    }
+
+    function handleAnswerText(e, index) {
+        answers[index].text = e.target.value;
+        setAnswers([...answers]);
+        console.log(answers);
+    }
+
+    function handleAnswerIsCorrect(e, index) {
+        answers[index].isCorrect = e.target.checked;
+        setAnswers([...answers]);
+        console.log(answers);
     }
 
     return (
         <div>
             <div>
-                <label>Question's text</label>
-                <input type="text" ref={text} />
+                <label>Number of answers (1 to 5)</label>
+                <input type="number" defaultValue={4} min="1" max="5" onChange={(e) => handleNumber(e)} />
             </div>
-            <div>
-                <label>Num Of Answers</label>
-                <input type="number" ref={number} defaultValue={4} onChange={() => {
-                    console.log(numOfAnswers.current.value);
-                    setNumOfAnswers(numOfAnswers.current.value)
-                }} />
-            </div>
-            {
-                new Array(number).map        
-            }
-            <div>{
-            }
-            </div>
-            <div>
-                <label>Question's tags (seperate with spaces)</label>
-                <input type="text" ref={tags} />
-            </div>
+            {new Array(numOfAnswers).map((_, index) => {
+                return <div key={index}>
+                    <label>Answer {index + 1}:</label>
+                    <input type="text" onChange={(e, index) => handleAnswerText(e, index)} />
+                    <label>Correct?</label>
+                    <input type="checkbox" onChange={(e, index) => handleAnswerIsCorrect(e, index)} />
+                </div>
+            })}
         </div>
     )
 }
