@@ -13,7 +13,10 @@ export class QuestionService {
 
     getByTopicId(id) {
         return this.get()
-            .then((data) => data.topicId == id)
+            .then((data) =>{
+                if(data)
+                data.filter(q => q.topicId == id)
+            }) 
             .then(this.success)
             .catch(this.failure)
     }

@@ -8,22 +8,56 @@ export function CreateTest() {
     const testService = new TestService();
     const questionsService = new QuestionService();
     const params = useParams();
+    const navigate = useNavigate();
     const [allQuestions, setAllQuestions] = useState([]);
     const [testQuestions, setQuestions] = useState([]);
-    const navigate = useNavigate();
-    let testName = useRef("");
-    let introText = useRef("");
-    let passingGrade = useRef(0);
+    const [testName, setName] = useState("");
+    const [introText, setIntro] = useState("");
+    const [authorEmail, setEmail] = useState("");
+    const [passingGrade, setGrade] = useState(0);
+    const [successText, setSuccess] = useState("");
+    const [failureText, setFailure]= useState("");
 
     useEffect(() => {
         questionsService.get().then(data => {
             if (data) {
+                
                 let result = data.filter(q => q.topicId == params.id);
                 console.log(result);
                 setAllQuestions(result);
             }
         });
     }, [params.id]);
+
+    function updateFailure(event){
+        let failure = event.target.value;
+        setFailure(failure);
+    }
+
+    function updateSuccess(event){
+        let success = event.target.value;
+        setSuccess(success);
+    }
+
+    function updateEmail(event){
+        let Email = event.target.value;
+        setEmail(Email);
+    }
+
+    function updateName(event){        
+        let name = event.target.value;
+        setName(name);
+    }
+
+    function updateIntro(event){
+        let intro = event.target.value;
+        setIntro(intro);
+    }
+
+    function updateGrade(event){
+        let grade = event.target.value;
+        setGrade(grade);
+    }
 
     function addToTest(id) {        
         let coppy = testQuestions;
@@ -44,18 +78,21 @@ export function CreateTest() {
         navigate("/manageTests/" + params.id)
     }
 
-    function addTest() {
+    function addTestToDb() {
         let test = {
-            name: testName.current.valueOf(),
-            intro: introText.current.valueOf(),
-            passGrade: passingGrade.current.valueOf(),
+            name: testName,
+            intro: introText,
+            authorEmail: authorEmail,
+            passGrade: passingGrade,
             version: 1,
             isActive: false,
-            questionsIdCollection: testQuestions.current.valueof(),
-            topicId: params.id
+            questionsIdCollection: testQuestions,
+            topicId: params.id,
+            successText: successText,
+            failureText: failureText
         }
-        testService.post(test);
-        navigate("/manageTests/" + params.id)
+        testService.post(test)
+        .then(navigate("/manageTests/" + params.id));        
     }
 
     return (
@@ -64,21 +101,28 @@ export function CreateTest() {
             <div>
                 <label>
                     Name:
-                    <input type="text" ref={testName} />
+                    <input type="text" onChange={(event)=>updateName(event)} />
                 </label>
             </div>
             <br />
             <div>
                 <label>
                     Introdaction to the test:
-                    <input textarea="true" ref={introText} />
+                    <input textarea="true" onChange={(event)=>updateIntro(event)} />
+                </label>
+            </div>
+            <br />
+            <div>
+                <label>
+                    author email:
+                    <input textarea="true" onChange={(event)=>updateEmail(event)} />
                 </label>
             </div>
             <br />
             <div>
                 <label>
                     Passing grade:
-                    <input type="number" placeholder='numbers only' ref={passingGrade} />
+                    <input type="number" placeholder='numbers only' onChange={(event)=>updateGrade(event)} />
                 </label>
             </div>
             <br />
@@ -99,7 +143,19 @@ export function CreateTest() {
                 </table>
             </div>
             <div>
-                <button onClick={addTest}>add Test</button>
+                <label>
+                    success mesaage text:
+                    <input type="text" onChange={(event)=>updateSuccess(event)} />
+                </label>
+            </div>
+            <div>
+                <label>
+                    failure mesaage text:
+                    <input type="text" onChange={(event)=>updateFailure(event)} />
+                </label>
+            </div>
+            <div>
+                <button onClick={()=>addTestToDb()}>add Test</button>
                 <button onClick={() => back()}>back</button>
             </div>
         </div>
