@@ -89,10 +89,23 @@ export function CreateTest() {
             questionsIdCollection: testQuestions,
             topicId: params.id,
             successText: successText,
-            failureText: failureText
+            failureText: failureText,
+            lastUpdate: getDate()
         }
         testService.post(test)
         .then(navigate("/manageTests/" + params.id));        
+    }
+
+    function getDate(){
+        let date = new Date();
+        let year = date.getFullYear();
+        let month = date.getMonth();
+        let day = date.getDate();
+        let houre = date.getHours();
+        let minute = date.getMinutes();
+        let second = date.getSeconds();
+
+        return `${day}.${month}.${year}, ${houre}:${minute}:${second}`
     }
 
     return (

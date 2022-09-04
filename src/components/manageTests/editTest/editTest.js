@@ -8,11 +8,12 @@ export function EditTest() {
     const params = useParams();
     const testService = new TestService();
     const questionService = new QuestionService();
+    const date = new Date();
     const navigate = useNavigate();
     const [test, setTest] = useState(null);
     const [allQuestions, setAllQuestions] = useState([]);
     const [testQuestions, setQuestions] = useState([]);
-    const [active, setActive] = useState(true);
+    const [active, setActive] = useState(false);
     const [testName, setName] = useState("");
     const [introText, setIntro] = useState("");
     const [authorEmail, setEmail] = useState("");
@@ -90,18 +91,33 @@ export function EditTest() {
     }
        
     function editTest() {
-        let test = {
+        let updateTest = {
             name: testName,
             intro: introText,
+            topicId: params.topicId,
             authorEmail: authorEmail,
             passGrade: passingGrade,
             version: test.version + 1,
             isActive: active,
             questionsIdCollection: testQuestions,
             successText: successText,
-            failureText: failureText
+            failureText: failureText,
+            lastUpdate: getDate()
         }
-        navigate("/manageTest/" + params.id);
+        testService.put(test.id, updateTest)
+       .then( navigate("/manageTests/" + params.topicId.toString()));
+    }
+
+    function getDate(){
+        
+        let year = date.getFullYear();
+        let month = date.getMonth();
+        let day = date.getDate();
+        let houre = date.getHours();
+        let minute = date.getMinutes();
+        let second = date.getSeconds();
+
+        return `${day}.${month}.${year}, ${houre}:${minute}:${second}`
     }
 
     function back() {
@@ -115,14 +131,14 @@ export function EditTest() {
             <div>
                 <label>
                     Name:
-                    <input type="text" onChange={(event)=>updateName(event)}/>
+                    <input type="text" value={test.name} onChange={(event)=>updateName(event)}/>
                 </label>
             </div>
             <br/>
             <div>
                 <label>
                     Test Introdaction:
-                    <input type="textarea" onChange={(event)=>updateIntro(event)}/>                    
+                    <input type="textarea" value={test.introText} onChange={(event)=>updateIntro(event)}/>                    
                 </label>
             </div>
             <br/>
@@ -130,7 +146,7 @@ export function EditTest() {
             <div>
                 <label>
                     author Email:
-                    <input type={"email"} onChange={(event)=>updateEmail(event)}/>                    
+                    <input type={"email"} value={authorEmail} onChange={(event)=>updateEmail(event)}/>                    
                 </label>
             </div>
             <br/>
@@ -143,11 +159,11 @@ export function EditTest() {
             <div>
                 <label>
                 isActive?
-                <input type="checkbox" selected={active} onChange={(event)=>updateActive(event)}/>
+                <input type="checkbox" value={test.isActive} selected={active} onChange={(event)=>updateActive(event)}/>
                 </label>
             </div>
             <div> 
-                <h4>questions (click to add</h4>
+                <h4>questions (click to add)</h4>
                 <table className="table">
                     <thead>
                         <tr>
@@ -165,14 +181,14 @@ export function EditTest() {
             <div>
                 <label>
                     success text message:
-                    <input type="text" onChange={(event)=>updateSuccess(event)}/>
+                    <input type="text" value={test.successText} onChange={(event)=>updateSuccess(event)}/>
                 </label>
             </div>
             <br/>
             <div>
                 <label>
-                    success text message:
-                    <input type="text" onChange={(event)=>updateFailure(event)}/>
+                    failure text message:
+                    <input type="text" value={test.failureText} onChange={(event)=>updateFailure(event)}/>
                 </label>
             </div>
             <br/>

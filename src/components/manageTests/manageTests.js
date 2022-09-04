@@ -67,6 +67,7 @@ export function ManageTests() {
                                 <td align="center">{test.isActive ? "" : <button onClick={() => edit(test.id)}>Edit</button>}
                                     {test.isActive ? "" : <button onClick={() => deleteTest(test.id)}>delete</button>}
                                     {test.isActive ? 'active' : 'deactive'}</td>
+                                <td>{test.lastUpdate}</td>
                             </tr>
                         )}
                     </tbody>
