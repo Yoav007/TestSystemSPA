@@ -25,7 +25,7 @@ export function ReportByTestMenu() {
         console.log(event.target.value);
         setId(event.target.value);
     }
-    if (testId) {
+    if (tests) {
         return (
             <>
                 <select defaultValue={"Select test"} onChange={(event) => handleSelect(event)}>
@@ -40,12 +40,6 @@ export function ReportByTestMenu() {
     }
     return (
         <>
-            <select defaultValue={"Select test"} onChange={(event) => handleSelect(event)}>
-                <option hidden>Select test</option>
-                {tests.map((test) =>
-                    <option key={test.id} value={test.id} >{test.name}</option>)}
-            </select>
-            <br />
             no test choose
         </>
     )
