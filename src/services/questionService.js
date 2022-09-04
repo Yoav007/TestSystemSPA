@@ -9,6 +9,7 @@ export class QuestionService {
             .catch(this.failure);
     }
 
+
     getById(id) {
         return axios.get("http://localhost:4040/questions/" + id)
             .then(function (response){
@@ -17,6 +18,7 @@ export class QuestionService {
     }
 
     getByTopicId(id) {
+
         return axios.get()
         .then(function (response){
             if ((data) => data.topicId == id)
