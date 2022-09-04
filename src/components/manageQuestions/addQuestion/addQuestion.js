@@ -4,42 +4,100 @@ import { QuestionService } from "../../../services/questionService";
 
 export function AddQuestion() {
     const params = useParams();
-    const [text, setText] = useState("");
-    const [answers, setAnswers] = useState([]);
-    const [numOfAnswers, setNumOfAnswers] = useState(4);
+    const [text, setText] = useState("");//question's text
+    const [numOfAnswers, setNumOfAnswers] = useState(1);//num of answers
+    const [tags, setTags] = useState([]);
+    const [answers, setAnswers] = useState([{ text: "", isCorrect: false }]);//question's answers
     const questionService = new QuestionService();
 
-    function handleNumber(event) {
-        setNumOfAnswers(event.target.value);
-        console.log(event.target.value);
+
+    // function handleNumberOfAnswers(event) {
+    //     let updatedNumOfAnswers = event.target.value;
+    //     let answerCopy = [...answers];
+    //     updatedNumOfAnswers > numOfAnswers ? answerCopy.push({ text: "", isCorrect: false }) : answerCopy.pop();
+    //     setAnswers(answerCopy);
+    //     setNumOfAnswers(updatedNumOfAnswers);
+    //     console.log(updatedNumOfAnswers);
+    //     // setNumOfAnswers(updatedNumOfAnswers); 
+    // }
+
+    function handleQuesionText(event) {
+        let inputText = event.target.value;
+        setText(inputText);
+        console.log(answers);
     }
 
-    function handleAnswerText(e, index) {
-        answers[index].text = e.target.value;
+    function handleAnswerText(event, answer) {
+        answer.text = event.target.value;
         setAnswers([...answers]);
         console.log(answers);
     }
 
-    function handleAnswerIsCorrect(e, index) {
-        answers[index].isCorrect = e.target.checked;
+    function handleAnswerIsCorrect(event, answer) {
+        answer.isCorrect = event.target.checked;
         setAnswers([...answers]);
         console.log(answers);
+    }
+
+    function deleteAnswer(answer) {
+        if (numOfAnswers > 1) {
+            setNumOfAnswers(numOfAnswers - 1)
+            console.log(numOfAnswers);
+            let updatedAnswersArry = [...answers].filter(a => a !== answer);
+            setAnswers(updatedAnswersArry);
+        }
+    }
+
+    function addAnswer() {
+        if (numOfAnswers < 5) {
+            setNumOfAnswers(numOfAnswers + 1)
+            console.log(numOfAnswers);
+            let updatedAnswersArry = [...answers];
+            updatedAnswersArry.push({ text: "", isCorrect: false })
+            setAnswers(updatedAnswersArry);
+        }
+    }
+
+    function updateTags(event) {
+        let res = event.target.value
+            .replace(/\s+/g, '')
+            .split(",");
+        setTags(res);
+    }
+    function addQuestion() {
+        let numOfCorrect = answers.filter(a => a.isCorrect == true).length;
+        let newId = questionService.get()
+        let newQuestion = {
+            text,
+            isSingle: numOfCorrect > 1 ? false : true,
+            toppicId: params.id,
+            answers,
+            tags,
+            isActive: false
+        }
     }
 
     return (
         <div>
             <div>
-                <label>Number of answers (1 to 5)</label>
-                <input type="number" defaultValue={4} min="1" max="5" onChange={(e) => handleNumber(e)} />
+                <label>Question's Text</label>
+                <input type="text" onChange={(e) => handleQuesionText(e)} />
             </div>
-            {new Array(numOfAnswers).map((_, index) => {
+            {numOfAnswers < 5 ? <button onClick={() => addAnswer()}>Add Answer</button> : <></>}
+            {answers.map((answer, index) => {
                 return <div key={index}>
                     <label>Answer {index + 1}:</label>
-                    <input type="text" onChange={(e, index) => handleAnswerText(e, index)} />
+                    <input type="text" value={answer.text} onChange={(e) => handleAnswerText(e, answer)} />
                     <label>Correct?</label>
-                    <input type="checkbox" onChange={(e, index) => handleAnswerIsCorrect(e, index)} />
+                    <input type="checkbox" defaultChecked={answer.isCorrect} onChange={(e) => handleAnswerIsCorrect(e, answer)} />
+                    {numOfAnswers > 1 ? <button onClick={() => deleteAnswer(answer)}>Delete Answer</button> : <></>}
                 </div>
             })}
+            <div>
+                <label>Question's tags (seperate with ",")</label>
+                <input type="text" defaultValue={tags} onChange={(e) => updateTags(e)} />
+            </div>
+            <button onClick={() => addQuestion()}>Add Question to main collection</button>
         </div>
     )
 }

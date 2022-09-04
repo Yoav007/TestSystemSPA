@@ -4,6 +4,12 @@ export class QuestionService {
             .then(this.success)
             .catch(this.failure)
     }
+    getNumOfQuestions() {
+        return fetch("http://localhost:3030/Questions")
+            .then(data => data.length)
+            .then(this.success)
+            .catch(this.failure)
+    }
 
     getById(id) {
         return fetch("http://localhost:3030/Questions/" + id)
@@ -13,10 +19,10 @@ export class QuestionService {
 
     getByTopicId(id) {
         return this.get()
-            .then((data) =>{
-                if(data)
-                data.filter(q => q.topicId == id)
-            }) 
+            .then((data) => {
+                if (data)
+                    data.filter(q => q.topicId == id)
+            })
             .then(this.success)
             .catch(this.failure)
     }

@@ -89,7 +89,7 @@ export function EditQuestion() {
                 })}
             </div>
             <div>
-                <label>Question's tags (seperate with spaces)</label>
+                <label>Question's tags (seperate with ',')</label>
                 <input type="text" defaultValue={tags} onChange={(e) => updateTags(e)} />
             </div>
             <button onClick={() => editQuestion()}>Confirm</button>
