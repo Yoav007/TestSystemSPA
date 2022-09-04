@@ -9,16 +9,17 @@ export function EditTest() {
     const testService = new TestService();
     const questionService = new QuestionService();
     const navigate = useNavigate();
-    const [test, setTest] = useState("");
+    const [test, setTest] = useState(null);
     const [allQuestions, setAllQuestions] = useState([]);
     const [testQuestions, setQuestions] = useState([]);
     const [active, setActive] = useState(true);
-    //let testName = useRef("");
     const [testName, setName] = useState("");
-    let introText = useRef("");
-    let passingGrade = useRef(0);
-    let activetest = useRef(true);
-
+    const [introText, setIntro] = useState("");
+    const [authorEmail, setEmail] = useState("");
+    const [passingGrade, setGrade] = useState(0);
+    const [successText, setSuccess] = useState("");
+    const [failureText, setFailure]= useState("");
+        
     useEffect(() => {
         testService.getById(params.id)
             .then(t => {
@@ -28,9 +29,10 @@ export function EditTest() {
     }, []);
     
     useEffect(()=> {
+        console.log(params);
         questionService.get().then(data => {
             if (data) {
-                let result = data.filter(q => q.topicId == params.id);
+                let result = data.filter(q => q.topicId === parseInt(params.topicId));
                 setAllQuestions(result);
             }
         })
@@ -49,22 +51,57 @@ export function EditTest() {
 
         console.log(coppy);
         setQuestions([...coppy]);
+        console.log(allQuestions);
+    }
+    
+    function updateFailure(event){
+        let failure = event.target.value;
+        setFailure(failure);
+    }
+
+    function updateSuccess(event){
+        let success = event.target.value;
+        setSuccess(success);
+    }
+
+    function updateEmail(event){
+        let Email = event.target.value;
+        setEmail(Email);
     }
 
     function updateName(event){        
         let name = event.target.value;
         setName(name);
     }
+
+    function updateIntro(event){
+        let intro = event.target.value;
+        setIntro(intro);
+    }
+
+    function updateGrade(event){
+        let grade = event.target.value;
+        setGrade(grade);
+    }
+
+    function updateActive(event){
+        let active = event.target.value;
+        setActive(!active);
+    }
        
     function editTest() {
         let test = {
             name: testName,
-            intro: introText.current.valueOf(),
-            passGrade: passingGrade.current.valueOf(),
+            intro: introText,
+            authorEmail: authorEmail,
+            passGrade: passingGrade,
             version: test.version + 1,
-            isActive: active.current.valueOf(),
-            questionsIdCollection: testQuestions.current.valueOf()
+            isActive: active,
+            questionsIdCollection: testQuestions,
+            successText: successText,
+            failureText: failureText
         }
+        navigate("/manageTest/" + params.id);
     }
 
     function back() {
@@ -78,28 +115,35 @@ export function EditTest() {
             <div>
                 <label>
                     Name:
-                    <input type="text" ref={testName} onChange={(event)=>updateName(event)}/>
+                    <input type="text" onChange={(event)=>updateName(event)}/>
                 </label>
             </div>
             <br/>
             <div>
                 <label>
                     Test Introdaction:
-                    <input type="textarea" ref={introText}/>
+                    <input type="textarea" onChange={(event)=>updateIntro(event)}/>                    
                 </label>
             </div>
             <br/>
             <div>
+            <div>
+                <label>
+                    author Email:
+                    <input type={"email"} onChange={(event)=>updateEmail(event)}/>                    
+                </label>
+            </div>
+            <br/>
                 <label>
                     Passing grade:
-                    <input type="number" placeholder='numbers only' ref={passingGrade} />
+                    <input type="number" placeholder='numbers only' onChange={(event)=>updateGrade(event)} />
                 </label>
             </div>
             <br />
             <div>
                 <label>
                 isActive?
-                <input type="checkbox" selected={active} onChange={()=>setActive(!activetest)}/>
+                <input type="checkbox" selected={active} onChange={(event)=>updateActive(event)}/>
                 </label>
             </div>
             <div> 
@@ -111,13 +155,27 @@ export function EditTest() {
                         </tr>
                     </thead>
                     <tbody>
-                        {allQuestions.map((question)=>
+                        {allQuestions.map((question)=>                        
                         <tr key={question.id} onClick={()=>addToTest(question.id)}>
                             <td>{question.text}</td>
                         </tr>)}
                     </tbody>
                 </table>
             </div>
+            <div>
+                <label>
+                    success text message:
+                    <input type="text" onChange={(event)=>updateSuccess(event)}/>
+                </label>
+            </div>
+            <br/>
+            <div>
+                <label>
+                    success text message:
+                    <input type="text" onChange={(event)=>updateFailure(event)}/>
+                </label>
+            </div>
+            <br/>
             <button onClick={() => editTest()}>Edit</button>
             <button onClick={() => back()}>back</button>
         </div>

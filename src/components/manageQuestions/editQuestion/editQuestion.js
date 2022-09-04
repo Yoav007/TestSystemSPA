@@ -1,17 +1,14 @@
 import { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { QuestionService } from "../../../services/questionService";
 
 export function EditQuestion() {
     const params = useParams();
     const [question, setQuestion] = useState("");
     const [answers, setAnswers] = useState([]);
+    const [tags, setTags] = useState([]);
     const questionService = new QuestionService();
-
-    let text = useRef("");
-    let answersText = useRef([]);
-    let answersCorrect = useRef([]);
-    let tags = useRef("");
+    const navigate = useNavigate();
 
     useEffect(() => {
         questionService.getById(params.id)
@@ -19,39 +16,56 @@ export function EditQuestion() {
                 console.log(q);
                 setQuestion(q);
                 setAnswers(q.answers);
+                setTags(q.tags);
             });
     }, [])
+
+    function updateQuestionText(event) {
+        let questionCopy = question;
+        let inputText = event.target.value;
+        questionCopy.text = inputText;
+        setQuestion(questionCopy);
+    }
 
     function updateAnswerText(event, answer) {
         answer.text = event.target.value;
         setAnswers([...answers]);
     }
+
     function updateAnswerIsCorrect(answer) {
         answer.isCorrect = !answer.isCorrect;
+        console.log(answer.isCorrect);
         setAnswers([...answers]);
     }
 
-    function editQuestion() {
-        let textArr = [];
-        for (let index = 0; index < question.answers.length; index++) {
-            const ans = {
-                text: answersText.current.at(index),
-                isCorrect: answersCorrect.current.values()[index]
-            }
-            textArr.push(ans);
-        }
-        let myTags = tags.current.value.split(" ");
+    function updateTags(event) {
+        let res = event.target.value
+            .replace(/\s+/g, '')
+            .split(",");
+        setTags(res);
+    }
 
-        let editedQuestions = {
-            id: question.id,
-            text: text.current.value,
-            isSingle: question.isSingle,
-            topicId: question.topicId,
-            answers: answers,
-            tags: myTags,
-            isActive: question.isActive
+    function editQuestion() {
+        let numOfCorrectAnswers = answers.filter(ans => ans.isCorrect === true).length;
+        if (numOfCorrectAnswers >= 1) {
+            let type = numOfCorrectAnswers == 1 ? true : false;
+
+            let editedQuestions = {
+                id: question.id,
+                text: question.text,
+                isSingle: type,
+                topicId: question.topicId,
+                answers: answers,
+                tags: tags,
+                isActive: question.isActive
+            }
+            questionService.put(editedQuestions.id, editedQuestions)
+            .then(navigate("/manageQuestions/show/" + editedQuestions.id.toString()));
+            
         }
-        console.log(editedQuestions);
+        else {
+            alert("must choose answer");
+        }
     }
 
     if (!question) return (
@@ -61,7 +75,7 @@ export function EditQuestion() {
         <div>
             <div>
                 <label>Question's text</label>
-                <input type="text" ref={text} defaultValue={question.text} />
+                <input type="text" defaultValue={question.text} onChange={(e) => updateQuestionText(e)} />
             </div>
             <div>
                 <label>Question's answers</label>
@@ -70,13 +84,13 @@ export function EditQuestion() {
                         <label>Answer {index + 1}:</label>
                         <input type="text" onChange={(e) => updateAnswerText(e, answer)} value={answer.text} />
                         <label>Correct?</label>
-                        <input type="checkbox" checked={answer.isCorrect} onChange={(e) => updateAnswerIsCorrect(e, answer)} />
+                        <input type="checkbox" defaultChecked={answer.isCorrect} onChange={() => updateAnswerIsCorrect(answer)} />
                     </div>
                 })}
             </div>
             <div>
-                <label>Question's tags (seperate with spaces)</label>
-                <input type="text" ref={tags} />
+                <label>Question's tags (seperate with ',')</label>
+                <input type="text" defaultValue={tags} onChange={(e) => updateTags(e)} />
             </div>
             <button onClick={() => editQuestion()}>Confirm</button>
         </div>

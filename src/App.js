@@ -26,7 +26,7 @@ function App() {
         <Route path="/manageQuestions/show/:id" element={<ShowQuestion />} />
         <Route path="/manageTests/:id" element={<ManageTests />} />
         <Route path="/createTest/:id" element={<CreateTest />} />
-        <Route path="/manageTest/editTest/:id" element={<EditTest/>}/>
+        <Route path="/manageTest/editTest/:id/:topicId" element={<EditTest/>}/>
         <Route path="/reports/:id" element={<ReportsMenu />} />
         <Route path="/reports/testsByTopic/:id" element={<ReportByTestMenu />} />
         {/* <Route path="/reports/byStudent/" element={<ReportByStudent/>} /> */}
