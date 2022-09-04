@@ -1,52 +1,67 @@
+import axios from "axios";
+
 export class TestService {
     get() {
-        return fetch("http://localhost:3030/Tests")
-            .then(this.success)
+        return axios.get("http://localhost:4040/tests")
+            .then(function (response){
+                return response.data})
             .catch(this.failure)
     }
 
     getById(id) {
-        return fetch("http://localhost:3030/Tests/" + id)
-            .then(this.success)
+        return axios.get("http://localhost:4040/tests/" + id)
+            .then(function (response){
+                return response.data})
             .catch(this.failure)
     }
 
     getByTopicId(id) {
-        return this.get()
-            .then((data) => data.topicId == id)
-            .then(this.success)
+        return axios.get()
+            .then(function (response){
+                if ((data) => data.topicId == id)
+                return response.data})
+            .catch(this.failure)
+    }
+
+    getResultByTopicId(id) {
+        return axios.get("http://localhost:4040/tests/testsByTopic/" + id)
+        .then(function (response){
+            return response.data})
             .catch(this.failure)
     }
 
     post(item) {
-        return fetch("http://localhost:3030/Tests", {
+        return axios.post("http://localhost:4040/tests/", {
             method: "POST",
             body: JSON.stringify(item),
             headers: {
                 'Content-Type': 'application/json'
             }
         })
-            .then(this.success)
+            .then(function (response){
+                return response.item})
             .catch(this.failure)
     }
 
     put(id, item) {
-        return fetch("http://localhost:3030/Tests/" + id, {
+        return axios.put("http://localhost:4040/tests/" + id, {
             method: "PUT",
             body: JSON.stringify(item),
             headers: {
                 'Content-Type': 'application/json'
             }
         })
-            .then(this.success)
+            .then(function (response){
+                return response.data})
             .catch(this.failure)
     }
 
     delete(id) {
-        return fetch("http://localhost:3030/Tests/" + id, {
+        return axios.delete("http://localhost:4040/tests/" + id, {
             method: "DELETE"
         })
-            .then(this.success)
+            .then(function (response){
+                return response.data})
             .catch(this.failure)
     }
 

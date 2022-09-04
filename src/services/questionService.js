@@ -1,61 +1,64 @@
+
+import axios from "axios";
+
 export class QuestionService {
     get() {
-        return fetch("http://localhost:3030/Questions")
-            .then(this.success)
-            .catch(this.failure)
-    }
-    getNumOfQuestions() {
-        return fetch("http://localhost:3030/Questions")
-            .then(data => data.length)
-            .then(this.success)
-            .catch(this.failure)
+        return axios.get("http://localhost:4040/questions")
+            .then(function (response){
+                return response.data})
+            .catch(this.failure);
     }
 
+
     getById(id) {
-        return fetch("http://localhost:3030/Questions/" + id)
-            .then(this.success)
+        return axios.get("http://localhost:4040/questions/" + id)
+            .then(function (response){
+                return response.data})
             .catch(this.failure)
     }
 
     getByTopicId(id) {
-        return this.get()
-            .then((data) => {
-                if (data)
-                    data.filter(q => q.topicId == id)
-            })
-            .then(this.success)
+
+        return axios.get()
+        .then(function (response){
+            if ((data) => data.topicId == id)
+            return response.data})
             .catch(this.failure)
     }
 
     post(item) {
-        return fetch("http://localhost:3030/Questions", {
+        return axios.post("http://localhost:4040/questions", {
             method: "POST",
             body: JSON.stringify(item),
             headers: {
                 'Content-Type': 'application/json'
             }
         })
-            .then(this.success)
+            .then(function (response){
+                return response.item})
             .catch(this.failure)
     }
 
     put(id, item) {
-        return fetch("http://localhost:3030/Questions/" + id, {
+        return axios.put("http://localhost:4040/questions/" + id, {
             method: "PUT",
             body: JSON.stringify(item),
             headers: {
                 'Content-Type': 'application/json'
             }
         })
-            .then(this.success)
+            .then(function (response){
+                return response.data})
+                
             .catch(this.failure)
     }
 
     delete(id) {
-        return fetch("http://localhost:3030/Questions/" + id, {
+        return axios.delete("http://localhost:4040/questions/" + id, {
             method: "DELETE"
         })
-            .then(this.success)
+            .then(function (response){
+                return response.data})
             .catch(this.failure)
     }
 

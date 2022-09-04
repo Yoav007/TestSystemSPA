@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom"
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import TopicService from "../../services/topicService.js";
+import TopicService from "../../../services/topicService.js";
 
 export function ReportsMenu(){
     
@@ -9,11 +9,12 @@ export function ReportsMenu(){
     const navigate = useNavigate();
     
     function reportByTest(){
-        navigate("/reports/byTest/" + params.id)
+        console.log(params.id);
+        navigate("/reports/testsByTopic/" + params.id);
     }
 
     function reportByStudent(){
-        navigate("/reports/byStudent")
+        navigate("/reports/byStudent/" );
     }
 
     return (
