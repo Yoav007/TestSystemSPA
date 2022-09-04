@@ -1,47 +1,103 @@
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useParams } from "react-router-dom";
+import { QuestionService } from "../../../services/questionService";
 
 export function AddQuestion() {
-
     const params = useParams();
-    const [numOfAnswers, setNumOfAnswers] = useState(4);
-    let text = useRef();
-    let number = useRef(4);
-    let answersText = useRef([]);
-    let answersCorrect = useRef([]);
-    let tags = useRef([]);
+    const [text, setText] = useState("");//question's text
+    const [numOfAnswers, setNumOfAnswers] = useState(1);//num of answers
+    const [tags, setTags] = useState([]);
+    const [answers, setAnswers] = useState([{ text: "", isCorrect: false }]);//question's answers
+    const questionService = new QuestionService();
 
+
+    // function handleNumberOfAnswers(event) {
+    //     let updatedNumOfAnswers = event.target.value;
+    //     let answerCopy = [...answers];
+    //     updatedNumOfAnswers > numOfAnswers ? answerCopy.push({ text: "", isCorrect: false }) : answerCopy.pop();
+    //     setAnswers(answerCopy);
+    //     setNumOfAnswers(updatedNumOfAnswers);
+    //     console.log(updatedNumOfAnswers);
+    //     // setNumOfAnswers(updatedNumOfAnswers); 
+    // }
+
+    function handleQuesionText(event) {
+        let inputText = event.target.value;
+        setText(inputText);
+        console.log(answers);
+    }
+
+    function handleAnswerText(event, answer) {
+        answer.text = event.target.value;
+        setAnswers([...answers]);
+        console.log(answers);
+    }
+
+    function handleAnswerIsCorrect(event, answer) {
+        answer.isCorrect = event.target.checked;
+        setAnswers([...answers]);
+        console.log(answers);
+    }
+
+    function deleteAnswer(answer) {
+        if (numOfAnswers > 1) {
+            setNumOfAnswers(numOfAnswers - 1)
+            console.log(numOfAnswers);
+            let updatedAnswersArry = [...answers].filter(a => a !== answer);
+            setAnswers(updatedAnswersArry);
+        }
+    }
+
+    function addAnswer() {
+        if (numOfAnswers < 5) {
+            setNumOfAnswers(numOfAnswers + 1)
+            console.log(numOfAnswers);
+            let updatedAnswersArry = [...answers];
+            updatedAnswersArry.push({ text: "", isCorrect: false })
+            setAnswers(updatedAnswersArry);
+        }
+    }
+
+    function updateTags(event) {
+        let res = event.target.value
+            .replace(/\s+/g, '')
+            .split(",");
+        setTags(res);
+    }
     function addQuestion() {
-        let qTags = tags.current.values.split(" ");
-        let question = {
-            topicId: params.topicId,
-            tags: qTags,
+        let numOfCorrect = answers.filter(a => a.isCorrect == true).length;
+        let newId = questionService.get()
+        let newQuestion = {
+            text,
+            isSingle: numOfCorrect > 1 ? false : true,
+            toppicId: params.id,
+            answers,
+            tags,
+            isActive: false
         }
     }
 
     return (
         <div>
             <div>
-                <label>Question's text</label>
-                <input type="text" ref={text} />
+                <label>Question's Text</label>
+                <input type="text" onChange={(e) => handleQuesionText(e)} />
             </div>
+            {numOfAnswers < 5 ? <button onClick={() => addAnswer()}>Add Answer</button> : <></>}
+            {answers.map((answer, index) => {
+                return <div key={index}>
+                    <label>Answer {index + 1}:</label>
+                    <input type="text" value={answer.text} onChange={(e) => handleAnswerText(e, answer)} />
+                    <label>Correct?</label>
+                    <input type="checkbox" defaultChecked={answer.isCorrect} onChange={(e) => handleAnswerIsCorrect(e, answer)} />
+                    {numOfAnswers > 1 ? <button onClick={() => deleteAnswer(answer)}>Delete Answer</button> : <></>}
+                </div>
+            })}
             <div>
-                <label>Num Of Answers</label>
-                <input type="number" ref={number} defaultValue={4} onChange={() => {
-                    console.log(numOfAnswers.current.value);
-                    setNumOfAnswers(numOfAnswers.current.value)
-                }} />
+                <label>Question's tags (seperate with ",")</label>
+                <input type="text" defaultValue={tags} onChange={(e) => updateTags(e)} />
             </div>
-            {
-                new Array(number).map        
-            }
-            <div>{
-            }
-            </div>
-            <div>
-                <label>Question's tags (seperate with spaces)</label>
-                <input type="text" ref={tags} />
-            </div>
+            <button onClick={() => addQuestion()}>Add Question to main collection</button>
         </div>
     )
 }
