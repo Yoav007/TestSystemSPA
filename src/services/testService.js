@@ -23,8 +23,15 @@ export class TestService {
             .catch(this.failure)
     }
 
+    getResultByTopicId(id) {
+        return axios.get("http://localhost:4040/tests/testsByTopic/" + id)
+        .then(function (response){
+            return response.data})
+            .catch(this.failure)
+    }
+
     post(item) {
-        return axios.post("http://localhost:4040/tests", {
+        return axios.post("http://localhost:4040/tests/", {
             method: "POST",
             body: JSON.stringify(item),
             headers: {

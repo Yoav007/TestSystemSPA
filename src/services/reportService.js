@@ -1,6 +1,8 @@
 import axios from "axios";
+import { TestService } from "./testService";
 
 export class ReportService {
+    
     get() {
         return axios.get("http://localhost:4040/reports")
             .then(function (response){
@@ -8,20 +10,27 @@ export class ReportService {
             .catch(this.failure)
     }
 
-    getById(id) {
-        return axios.get("http://localhost:4040/reports/" + id)
+    getResultByTestId(id) {
+        return axios.get("http://localhost:4040/reports/bytest/" + id)
             .then(function (response){
                 return response.data})
             .catch(this.failure)
     }
 
-    getByTopicId(id) {
-        return axios.get()
+    // getResultByTopicId(id) {
+    //     return axios.get("http://localhost:4040/reports/bytest")
+    //     .then(function (response){
+    //         if ((data) => data.topicId == id && data.isActive == true);  
+    //         return response.data})
+    //         .catch(this.failure)
+    // }
+    getStudents(){
+        return axios.get("http://localhost:4040/reports/byStudent/")
         .then(function (response){
-            if ((data) => data.topicId == id)
             return response.data})
-            .catch(this.failure)
+        .catch(this.failure)
     }
+    
 
     success(response) {
         if (response.status < 350) {

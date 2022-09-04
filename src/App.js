@@ -4,13 +4,14 @@ import { MainMenu } from './components/mainMenu/mainMenu';
 import { Routes, Route } from 'react-router-dom';
 import { ManageQuestions } from './components/manageQuestions/manageQuestions';
 import { ManageTests } from './components/manageTests/manageTests';
-import { ReportsMenu } from './components/reportsMenu/reportsMenu';
-import { ReportByTestMenu } from './components/reportByTestMenu/reportByTestMenu';
+import { ReportsMenu } from './components/manageReports/reportsMenu/reportsMenu';
+import { ReportByTestMenu } from './components/manageReports/reportByTestMenu/reportByTestMenu';
 import { ShowQuestion } from './components/manageQuestions/showQuestion/showQuestion';
 import { EditQuestion } from './components/manageQuestions/editQuestion/editQuestion';
 import { CreateTest } from './components/manageTests/createTest/createTest';
 import { AddQuestion } from './components/manageQuestions/addQuestion/addQuestion';
 import { EditTest } from './components/manageTests/editTest/editTest';
+import { ReportByStudent } from './components/manageReports/reportsByStudent/reportsByStudent';
 
 
 //hello
@@ -27,7 +28,8 @@ function App() {
         <Route path="/createTest/:id" element={<CreateTest />} />
         <Route path="/manageTest/editTest/:id" element={<EditTest/>}/>
         <Route path="/reports/:id" element={<ReportsMenu />} />
-        <Route path="/reports/byTest/:id" element={<ReportByTestMenu />} />
+        <Route path="/reports/testsByTopic/:id" element={<ReportByTestMenu />} />
+        {/* <Route path="/reports/byStudent/" element={<ReportByStudent/>} /> */}
       </Routes>
     </div>
   );

@@ -2,7 +2,7 @@ import axios from "axios";
 
 class TopicService {
     get() {
-        return axios.get("http://localhost:4040/tpics")
+        return axios.get("http://localhost:4040/topics")
             .then(function (response){
                 return response.data})
             .catch(this.failure)
