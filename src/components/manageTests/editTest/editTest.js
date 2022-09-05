@@ -7,8 +7,7 @@ export function EditTest() {
 
     const params = useParams();
     const testService = new TestService();
-    const questionService = new QuestionService();
-    const date = new Date();
+    const questionService = new QuestionService();    
     const navigate = useNavigate();
     const [test, setTest] = useState(null);
     const [allQuestions, setAllQuestions] = useState([]);
@@ -33,7 +32,7 @@ export function EditTest() {
         console.log(params);
         questionService.get().then(data => {
             if (data) {
-                let result = data.filter(q => q.topicId === parseInt(params.topicId));
+                let result = data.filter(q => q.topicId === params.topicId);
                 setAllQuestions(result);
             }
         })
@@ -92,11 +91,12 @@ export function EditTest() {
        
     function editTest() {
         let updateTest = {
+            id: test.id,
             name: testName,
             intro: introText,
             topicId: params.topicId,
             authorEmail: authorEmail,
-            passGrade: passingGrade,
+            passingGrade: passingGrade,
             version: test.version + 1,
             isActive: active,
             questionsIdCollection: testQuestions,
@@ -104,12 +104,12 @@ export function EditTest() {
             failureText: failureText,
             lastUpdate: getDate()
         }
-        testService.put(test.id, updateTest)
+        testService.put(updateTest.id, updateTest)
        .then( navigate("/manageTests/" + params.topicId.toString()));
     }
 
     function getDate(){
-        
+        const date = new Date();
         let year = date.getFullYear();
         let month = date.getMonth();
         let day = date.getDate();
@@ -131,14 +131,14 @@ export function EditTest() {
             <div>
                 <label>
                     Name:
-                    <input type="text" value={test.name} onChange={(event)=>updateName(event)}/>
+                    <input type="text" defaultValue={test.name} onChange={(event)=>updateName(event)}/>
                 </label>
             </div>
             <br/>
             <div>
                 <label>
                     Test Introdaction:
-                    <input type="textarea" value={test.introText} onChange={(event)=>updateIntro(event)}/>                    
+                    <input type="textarea" defaultValue={test.intro} onChange={(event)=>updateIntro(event)}/>                    
                 </label>
             </div>
             <br/>
@@ -146,25 +146,25 @@ export function EditTest() {
             <div>
                 <label>
                     author Email:
-                    <input type={"email"} value={authorEmail} onChange={(event)=>updateEmail(event)}/>                    
+                    <input type={"email"} defaultValue={test.authorEmail} onChange={(event)=>updateEmail(event)}/>                    
                 </label>
             </div>
             <br/>
                 <label>
                     Passing grade:
-                    <input type="number" placeholder='numbers only' onChange={(event)=>updateGrade(event)} />
+                    <input type="number" defaultValue={test.passingGrade} placeholder='numbers only' onChange={(event)=>updateGrade(event)} />
                 </label>
             </div>
             <br />
             <div>
                 <label>
                 isActive?
-                <input type="checkbox" value={test.isActive} selected={active} onChange={(event)=>updateActive(event)}/>
+                <input type="checkbox" defaultValue={test.isActive} selected={active} onChange={(event)=>updateActive(event)}/>
                 </label>
             </div>
             <div> 
                 <h4>questions (click to add)</h4>
-                <table className="table">
+                <table className="table" align="center">
                     <thead>
                         <tr>
                             <th>questions</th>
@@ -172,7 +172,8 @@ export function EditTest() {
                     </thead>
                     <tbody>
                         {allQuestions.map((question)=>                        
-                        <tr key={question.id} onClick={()=>addToTest(question.id)}>
+                        <tr key={question.id} onClick={()=>addToTest(question.id)}
+                        style={{background: testQuestions.includes(question)? 'yellow' : 'white'}}>
                             <td>{question.text}</td>
                         </tr>)}
                     </tbody>
@@ -181,14 +182,14 @@ export function EditTest() {
             <div>
                 <label>
                     success text message:
-                    <input type="text" value={test.successText} onChange={(event)=>updateSuccess(event)}/>
+                    <input type="text" defaultValue={test.successText} onChange={(event)=>updateSuccess(event)}/>
                 </label>
             </div>
             <br/>
             <div>
                 <label>
                     failure text message:
-                    <input type="text" value={test.failureText} onChange={(event)=>updateFailure(event)}/>
+                    <input type="text" defaultValue={test.failureText} onChange={(event)=>updateFailure(event)}/>
                 </label>
             </div>
             <br/>
