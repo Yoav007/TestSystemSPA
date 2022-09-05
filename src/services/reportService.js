@@ -17,13 +17,6 @@ export class ReportService {
             .catch(this.failure)
     }
 
-    // getResultByTopicId(id) {
-    //     return axios.get("http://localhost:4040/reports/bytest")
-    //     .then(function (response){
-    //         if ((data) => data.topicId == id && data.isActive == true);  
-    //         return response.data})
-    //         .catch(this.failure)
-    // }
     getStudents(){
         return axios.get("http://localhost:4040/reports/byStudent/")
         .then(function (response){
