@@ -66,6 +66,8 @@ export function AddQuestion() {
                 isActive: false
             }
             console.log(newQuestion);
+            questionService.post(newQuestion);
+            console.log("added");
         }
     }
 
