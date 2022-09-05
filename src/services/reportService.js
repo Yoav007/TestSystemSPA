@@ -24,7 +24,14 @@ export class ReportService {
         .catch(this.failure)
     }
     
-
+    getResultByStudentId(id){
+        return axios.get ("http://localhost:4040/reports/byStudent/" +id)
+        .then(function(response){
+            return response.data
+        })
+        .catch(this.failure)
+    }
+    
     success(response) {
         if (response.status < 350) {
             return response.json()
