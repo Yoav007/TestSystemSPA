@@ -29,7 +29,7 @@ function App() {
         <Route path="/manageTest/editTest/:id/:topicId" element={<EditTest/>}/>
         <Route path="/reports/:id" element={<ReportsMenu />} />
         <Route path="/reports/testsByTopic/:id" element={<ReportByTestMenu />} />
-        {/* <Route path="/reports/byStudent/" element={<ReportByStudent/>} /> */}
+        <Route path="/reports/byStudent/" element={<ReportByStudent/>} />
       </Routes>
     </div>
   );
