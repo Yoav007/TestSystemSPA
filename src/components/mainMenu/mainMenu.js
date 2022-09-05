@@ -11,16 +11,17 @@ export function MainMenu() {
     const navigate = useNavigate();
 
     useEffect(() => {
+        // console.log(crypto.randomUUID());
         service.get().then(data => {
             if (data) {
                 setTopics(data);
             }
         })
     }, []);
-    //hey
+
     function handleSelect(event) {
         let id = event.target.value;
-        let choice = topics.filter(x => x.id == id);
+        let choice = topics.filter(t => t.id == id);
         if (!show) setShow(true);
         setCurrentTopic(choice[0]);
     };
