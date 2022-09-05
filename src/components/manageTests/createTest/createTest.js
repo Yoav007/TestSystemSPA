@@ -82,12 +82,12 @@ export function CreateTest() {
             id: crypto.randomUUID(),
             name: testName,
             intro: introText,
+            topicId: params.id,
             authorEmail: authorEmail,
             passingGrade: passingGrade,
             version: 1,
             isActive: false,
             questionsIdCollection: testQuestions,
-            topicId: params.id,
             successText: successText,
             failureText: failureText,
             lastUpdate: getDate()

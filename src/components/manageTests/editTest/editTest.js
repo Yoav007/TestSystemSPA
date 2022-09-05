@@ -12,13 +12,13 @@ export function EditTest() {
     const [test, setTest] = useState(null);
     const [allQuestions, setAllQuestions] = useState([]);
     const [testQuestions, setQuestions] = useState([]);
-    const [active, setActive] = useState(false);
-    const [testName, setName] = useState("");
-    const [introText, setIntro] = useState("");
-    const [authorEmail, setEmail] = useState("");
-    const [passingGrade, setGrade] = useState(0);
-    const [successText, setSuccess] = useState("");
-    const [failureText, setFailure]= useState("");
+    const [active, setActive] = useState(test.isActive);
+    const [testName, setName] = useState(test.name);
+    const [introText, setIntro] = useState(test.intro);
+    const [authorEmail, setEmail] = useState(test.authorEmail);
+    const [passingGrade, setGrade] = useState(test.passingGrade);
+    const [successText, setSuccess] = useState(test.successText);
+    const [failureText, setFailure]= useState(test.failureText);
         
     useEffect(() => {
         testService.getById(params.id)
