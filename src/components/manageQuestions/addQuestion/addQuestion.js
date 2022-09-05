@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useState } from "react"
 import { useParams } from "react-router-dom";
 import { QuestionService } from "../../../services/questionService";
 
@@ -32,6 +32,7 @@ export function AddQuestion() {
         if (numOfAnswers > 1) {
             setNumOfAnswers(numOfAnswers - 1)
             console.log(numOfAnswers);
+            // answer = { text: "", isCorrect: false }
             let updatedAnswersArry = [...answers].filter(a => a !== answer);
             setAnswers(updatedAnswersArry);
         }
@@ -53,17 +54,23 @@ export function AddQuestion() {
             .split(",");
         setTags(res);
     }
+
     function addQuestion() {
-        if (text != "") {
+        let numOfInvalidAnswers = answers.filter(a => a.text === "").length;
+        console.log(numOfInvalidAnswers);
+        let containsCorrectAnswer = answers.filter(a => a.isCorrect == true);
+        console.log(containsCorrectAnswer);
+        if (text != "" && numOfInvalidAnswers == 0 && containsCorrectAnswer.length > 0) {
             let numOfCorrect = answers.filter(a => a.isCorrect == true).length;
             let newId = questionService.get()
             let newQuestion = {
                 text,
                 isSingle: numOfCorrect > 1 ? false : true,
-                toppicId: params.id,
+                topicId: params.id,
                 answers,
                 tags,
-                isActive: false
+                isActive: false,
+                id: crypto.randomUUID()
             }
             console.log(newQuestion);
             questionService.post(newQuestion);

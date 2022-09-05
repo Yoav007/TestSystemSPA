@@ -1,8 +1,13 @@
 {
   "ExpandedNodes": [
     "",
-    "\\src\\components"
+    "\\src",
+    "\\src\\components",
+    "\\src\\components\\manageQuestions",
+    "\\src\\components\\manageQuestions\\addQuestion",
+    "\\src\\components\\manageTests",
+    "\\src\\components\\manageTests\\editTest"
   ],
-  "SelectedNode": "\\src",
+  "SelectedNode": "\\src\\components\\manageTests\\editTest\\editTest.js",
   "PreviewInSolutionExplorer": false
 }
