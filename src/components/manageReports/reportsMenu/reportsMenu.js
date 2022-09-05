@@ -19,10 +19,11 @@ export function ReportsMenu(){
 
     return (
     <div>
-        <button onClick={()=> reportByTest()}>Report by test</button>
+        <h1>Reports</h1>
+        <button onClick={()=> reportByTest()}>Report by Test</button>
         <br/>
         <br/>
-        <button onClick={()=> reportByStudent()}>Report by student</button>
+        <button onClick={()=> reportByStudent()}>Report by Student</button>
     </div>
     )
 }

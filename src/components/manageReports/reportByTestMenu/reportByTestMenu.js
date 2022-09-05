@@ -54,6 +54,7 @@ export function ReportByTestMenu() {
     if (tests) {
         return (
             <>
+             <h1>Report By Test</h1>
                 <select defaultValue={"Select test"} onChange={(event) => handleSelect(event)}>
                     <option hidden>Select test</option>
                     {tests.map((test) =>
@@ -74,7 +75,7 @@ export function ReportByTestMenu() {
     }
     return (
         <>
-            no tests
+            No tests were found
         </>
     )  
 }
