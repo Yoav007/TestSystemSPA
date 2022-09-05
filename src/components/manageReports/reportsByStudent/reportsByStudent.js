@@ -7,6 +7,7 @@ import "./reportsByStudent.scss";
 
 export function ReportByStudent() {
 
+    
     const params = useParams();
     const reportService = new ReportService();
     const testService = new TestService();
@@ -39,12 +40,15 @@ export function ReportByStudent() {
     }
     function getTestName(id) {
         let testName;
-        testService.getById(id).then((data)=> data.name = testName);
+        testService.getById(id).then((data)=>{
+        testName = data.name;
         console.log(testName);
+        })
         return testName
     }
 
     function getStudentName(id){
+        if(student.id ==id)
         return student.name
     }
 
