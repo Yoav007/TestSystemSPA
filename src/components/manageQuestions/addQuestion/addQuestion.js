@@ -10,17 +10,6 @@ export function AddQuestion() {
     const [answers, setAnswers] = useState([{ text: "", isCorrect: false }]);//question's answers
     const questionService = new QuestionService();
 
-
-    // function handleNumberOfAnswers(event) {
-    //     let updatedNumOfAnswers = event.target.value;
-    //     let answerCopy = [...answers];
-    //     updatedNumOfAnswers > numOfAnswers ? answerCopy.push({ text: "", isCorrect: false }) : answerCopy.pop();
-    //     setAnswers(answerCopy);
-    //     setNumOfAnswers(updatedNumOfAnswers);
-    //     console.log(updatedNumOfAnswers);
-    //     // setNumOfAnswers(updatedNumOfAnswers); 
-    // }
-
     function handleQuesionText(event) {
         let inputText = event.target.value;
         setText(inputText);
@@ -65,15 +54,18 @@ export function AddQuestion() {
         setTags(res);
     }
     function addQuestion() {
-        let numOfCorrect = answers.filter(a => a.isCorrect == true).length;
-        let newId = questionService.get()
-        let newQuestion = {
-            text,
-            isSingle: numOfCorrect > 1 ? false : true,
-            toppicId: params.id,
-            answers,
-            tags,
-            isActive: false
+        if (text != "") {
+            let numOfCorrect = answers.filter(a => a.isCorrect == true).length;
+            let newId = questionService.get()
+            let newQuestion = {
+                text,
+                isSingle: numOfCorrect > 1 ? false : true,
+                toppicId: params.id,
+                answers,
+                tags,
+                isActive: false
+            }
+            console.log(newQuestion);
         }
     }
 
@@ -89,7 +81,7 @@ export function AddQuestion() {
                     <label>Answer {index + 1}:</label>
                     <input type="text" value={answer.text} onChange={(e) => handleAnswerText(e, answer)} />
                     <label>Correct?</label>
-                    <input type="checkbox" defaultChecked={answer.isCorrect} onChange={(e) => handleAnswerIsCorrect(e, answer)} />
+                    <input type="checkbox" onChange={(e) => handleAnswerIsCorrect(e, answer)} />
                     {numOfAnswers > 1 ? <button onClick={() => deleteAnswer(answer)}>Delete Answer</button> : <></>}
                 </div>
             })}
