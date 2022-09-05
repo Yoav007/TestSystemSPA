@@ -19,9 +19,8 @@ export function CreateTest() {
     const [failureText, setFailure]= useState("");
 
     useEffect(() => {
-        questionsService.get().then(data => {
-            if (data) {
-                
+        questionsService.get().then(data => {            
+            if (data) {   
                 let result = data.filter(q => q.topicId == params.id);
                 console.log(result);
                 setAllQuestions(result);
@@ -80,10 +79,11 @@ export function CreateTest() {
 
     function addTestToDb() {
         let test = {
+            id: crypto.randomUUID(),
             name: testName,
             intro: introText,
             authorEmail: authorEmail,
-            passGrade: passingGrade,
+            passingGrade: passingGrade,
             version: 1,
             isActive: false,
             questionsIdCollection: testQuestions,
@@ -141,7 +141,7 @@ export function CreateTest() {
             <br />
             <div>
                 <h2>qustions (click to add the question to the test)</h2>
-                <table className='table'>
+                <table className='table' align='center'>
                     <thead>
                         <tr>
                             <th>question</th>
@@ -149,7 +149,8 @@ export function CreateTest() {
                     </thead>
                     <tbody>
                         {allQuestions.map((question) =>
-                            <tr key={question.id} onClick={() => addToTest(question.id)}>
+                            <tr key={question.id} onClick={() => addToTest(question.id)}
+                            style={{background: testQuestions.includes(question)? 'yellow' : 'white'}}>
                                 <td>{question.text}</td>
                             </tr>)}
                     </tbody>
