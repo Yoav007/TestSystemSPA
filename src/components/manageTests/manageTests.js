@@ -13,6 +13,7 @@ export function ManageTests() {
 
     useEffect(() => {
         testService.get().then(data => {
+            console.log(data);
             if (data) {
                 let result = data.filter(x => x.topicId == params.id);
                 console.log(result);
@@ -39,12 +40,17 @@ export function ManageTests() {
         navigate(`/manageTest/editTest/${id}/${params.id}`);
     }
 
-    if (tests.length == 0) return <h3>There are no tests in this topic</h3>
+    if (tests.length == 0) return (
+        <div>
+            <h3>There are no tests in this topic</h3>
+            <button onClick={() => createTest()}>create a tets</button>
+        </div>
+         )
     return (
         <div>
             <div className="testsList">
                 <h3>Tests:</h3>
-                <table>
+                <table align="center">
                     <thead>
                         <tr>
                             <th>Id</th>

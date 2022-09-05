@@ -1,3 +1,4 @@
+
 import axios from "axios";
 
 export class TestService {
@@ -6,7 +7,7 @@ export class TestService {
             .then(function (response) {
                 return response.data
             })
-            .catch(this.failure)
+            .catch(this.failure);
     }
 
     getById(id) {
@@ -52,7 +53,7 @@ export class TestService {
 
     delete(id) {
         return axios.delete("http://localhost:4040/tests/" + id, {
-            method: "DELETE"
+           method: "DELETE"
         })
             .then(function (response) {
                 return response.data
