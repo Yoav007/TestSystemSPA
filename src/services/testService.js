@@ -13,6 +13,7 @@ export class TestService {
     getById(id) {
         return axios.get("http://localhost:4040/tests/" + id)
             .then(function (response) {
+                console.log(response.data);
                 return response.data
             })
             .catch(this.failure)

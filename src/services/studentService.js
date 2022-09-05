@@ -28,6 +28,13 @@ export class StudentService {
             .catch(this.failure)
     }
 
+    getStudentsByTestId(id){
+        return axios.get("http://localhost:4040/Students/ByTestId")
+        .then(function (response) {
+            return response.data
+        })
+        .catch(this.failure)
+    }
 
     post(item) {
         return axios.post("http://localhost:4040/Students", item)
