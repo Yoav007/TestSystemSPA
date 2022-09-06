@@ -40,6 +40,10 @@ export function ManageTests() {
         navigate(`/manageTest/editTest/${id}/${params.id}`);
     }
 
+    function takeTest(id){
+        navigate(`/manageTest/takeTest/${id}`);
+    }
+
     if (tests.length == 0) return (
         <div>
             <h3>There are no tests in this topic</h3>
@@ -60,6 +64,7 @@ export function ManageTests() {
                             <th>Version</th>
                             <th>Actions</th>
                             <th>last update</th>
+                            <th>take test</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -74,6 +79,7 @@ export function ManageTests() {
                                     {test.isActive ? "" : <button onClick={() => deleteTest(test.id)}>delete</button>}
                                     {test.isActive ? 'active' : 'deactive'}</td>
                                 <td>{test.lastUpdate}</td>
+                                <button onClick={()=>takeTest(test.id)}>take test</button>
                             </tr>
                         )}
                     </tbody>

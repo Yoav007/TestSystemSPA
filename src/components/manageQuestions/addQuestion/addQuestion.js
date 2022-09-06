@@ -66,7 +66,7 @@ export function AddQuestion() {
             let newQuestion = {
                 text,
                 isSingle: numOfCorrect > 1 ? false : true,
-                topicId: params.id,
+                topicId: params.topicId,
                 answers,
                 tags,
                 isActive: false,

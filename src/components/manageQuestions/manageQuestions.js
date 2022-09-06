@@ -48,7 +48,7 @@ export function ManageQuestions() {
     return (
         <div>
             <h3>Questions:</h3>
-            <table>
+            <table align="center">
                 <thead>
                     <tr>
                         <th>Id</th>
