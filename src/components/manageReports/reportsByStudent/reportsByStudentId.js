@@ -12,6 +12,7 @@ export function ReportByStudentId() {
     const testService = new TestService();
     const reportService = new ReportService();
     const questionService = new QuestionService();
+    const navigate = useNavigate()
     const params = useParams();
     const [results, setResults] = useState([]);
     const [testName,setTname] = useState();
@@ -60,8 +61,8 @@ export function ReportByStudentId() {
     //setCorrect (answers);
     }
 
-    function showWrong(){
-        
+    function back(){
+        navigate("/reports/byStudent/")  
     }
     
     if(results){
@@ -104,19 +105,10 @@ export function ReportByStudentId() {
                     </tr>
                 </tbody>
                </table>
-
-               {/* {correct? <div style={{ visibility: see ? '' : 'hidden' }}>
-                <h3>Correct Answers:</h3>
-                {correct.map((question)=>
-                 <p key={question.id}>{question.text}</p>
-                )}
-
-               </div>:<></>} */}
-            
-            </div>: <></>}
-
-                
+            </div>: <></>} 
+            <button onClick={() => back()}>back</button>  
             </section>
+            
            
         )
 
