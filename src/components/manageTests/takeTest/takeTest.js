@@ -33,6 +33,7 @@ export function TakeTest() {
     }
 
     function stratTest() {
+
         if (isOk) {
             let newStudent = {
                 id: crypto.randomUUID(),
