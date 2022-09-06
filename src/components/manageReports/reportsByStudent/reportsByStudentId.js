@@ -67,6 +67,7 @@ export function ReportByStudentId() {
     
     if(results){
         return(
+            <>
             <section>
                 <h2>Student Reports for Student ID {params.id}</h2>
                     <select defaultValue={"Select Test"} onChange={(event) => handleSelect(event)}>
@@ -106,9 +107,9 @@ export function ReportByStudentId() {
                 </tbody>
                </table>
             </div>: <></>} 
-            <button onClick={() => back()}>back</button>  
             </section>
-            
+            <button onClick={() => back()}>back</button>  
+            </>
            
         )
 

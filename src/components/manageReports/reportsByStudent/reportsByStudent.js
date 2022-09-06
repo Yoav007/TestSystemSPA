@@ -38,6 +38,10 @@ export function ReportByStudent() {
     navigate ("/reports/byStudent/" + student.id);
    }
 
+   function back(){
+    navigate("/reports/:id")  
+    }
+
     if (students) {
         return (
             <section>
@@ -54,7 +58,7 @@ export function ReportByStudent() {
 
                          <button onClick={() => goToStudentReport()}>Go To Student Reports</button>
                     </div> :<></>}
-                   
+                    <button onClick={() => back()}>back</button>  
                 </div>
             </section>
         )
