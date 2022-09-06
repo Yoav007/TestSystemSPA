@@ -5,17 +5,22 @@ import { ReportService } from "../../../services/reportService.js";
 import "./reportsByStudent.scss";
 import { StudentService } from "../../../services/studentService.js";
 import { TestService } from "../../../services/testService.js";
+import { QuestionService } from "../../../services/questionService.js";
 
 export function ReportByStudentId() {
     
     const testService = new TestService();
     const reportService = new ReportService();
+    const questionService = new QuestionService();
     const params = useParams();
     const [results, setResults] = useState([]);
     const [testName,setTname] = useState();
     const [tests, setTests] = useState();
     const [report, setReport] = useState();
     const [show, setShow] = useState();
+    const [see, setSee] = useState();
+    const [correct, setCorrect] = useState([]);
+    const [wrong, setWrong] = useState([]);
     
     
     useEffect(() => {
@@ -36,7 +41,27 @@ export function ReportByStudentId() {
         let choice = results.filter((t)=> t.id == test.id);
         if (!show) setShow(true);
         setReport(choice[0]);
+    }
 
+    function showCorrect(){
+    // let answers =[];
+    report.correctAnswers.forEach(answer => {
+    console.log(answer.questionId);
+    questionService.getById(answer.questionId).then(data=>{
+    if(data){
+        console.log(data);
+        setCorrect([...correct],data);
+        console.log(correct);
+    }
+    })
+    
+    });
+    if (!see) setSee(true);
+    //setCorrect (answers);
+    }
+
+    function showWrong(){
+        
     }
     
     if(results){
@@ -47,14 +72,50 @@ export function ReportByStudentId() {
                 <option hidden>Select Test</option>
                 {results.map((result)=>
                 <option key={result.testId} value = {result.testId}>{result.testName}</option>
-                )}
-               
+                )}   
             </select>
-            <div style={{ visibility: show ? '' : 'hidden' }}>
+            {report? <div style={{ visibility: show ? '' : 'hidden' }}>
+                <h3> Report for Test {report.testName} for Student ID: {report.studentId}</h3>
+               <table align="center">
+                <thead align="center">
+                    <tr>
+                        <th>Test ID</th>
+                        <th>Test Name</th>
+                        <th>Student ID</th>
+                        <th>Number of Answers Answered</th>
+                        <th>Correct Answers</th>
+                        <th>Grade</th>
+                        <th>Wrong Answers</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{report.testId}</td>
+                        <td>{report.testName}</td>
+                        <td>{report.studentId}</td>
+                        <td>{report.numOfQuestionsAnswered}</td>
+                        {/* <button onClick={() => showCorrect(report)}>Show</button> */}
+                        <td>{report.correctAnswers.length}
+                        {/* <button onClick={()=>showCorrect()}>Show</button> */}
+                         </td> 
+                        <td>{report.grade}</td>
+                        <td>{report.wrongAnswers.length}</td>
+                        {/* <button onClick={() => showWrong()}>Show</button></td> */}
+                    </tr>
+                </tbody>
+               </table>
 
-            </div>
+               {/* {correct? <div style={{ visibility: see ? '' : 'hidden' }}>
+                <h3>Correct Answers:</h3>
+                {correct.map((question)=>
+                 <p key={question.id}>{question.text}</p>
+                )}
 
+               </div>:<></>} */}
+            
+            </div>: <></>}
 
+                
             </section>
            
         )
