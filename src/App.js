@@ -13,6 +13,8 @@ import { AddQuestion } from './components/manageQuestions/addQuestion/addQuestio
 import { EditTest } from './components/manageTests/editTest/editTest';
 import { ReportByStudent } from './components/manageReports/reportsByStudent/reportsByStudent';
 import {ReportByStudentId} from './components/manageReports/reportsByStudent/reportsByStudentId';
+import {TakeTest} from './components/manageTests/takeTest/takeTest';
+
 
 
 //hello
@@ -28,6 +30,7 @@ function App() {
         <Route path="/manageTests/:id" element={<ManageTests />} />
         <Route path="/createTest/:id" element={<CreateTest />} />
         <Route path="/manageTest/editTest/:id/:topicId" element={<EditTest/>}/>
+        <Route path="/manageTest/takeTest/:id" element={<TakeTest/>}/>
         <Route path="/reports/:id" element={<ReportsMenu />} />
         <Route path="/reports/testsByTopic/:id" element={<ReportByTestMenu />} />
         <Route path="/reports/byStudent/" element={<ReportByStudent/>} />
