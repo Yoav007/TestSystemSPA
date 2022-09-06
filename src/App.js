@@ -12,8 +12,8 @@ import { CreateTest } from './components/manageTests/createTest/createTest';
 import { AddQuestion } from './components/manageQuestions/addQuestion/addQuestion';
 import { EditTest } from './components/manageTests/editTest/editTest';
 import { ReportByStudent } from './components/manageReports/reportsByStudent/reportsByStudent';
-import {ReportByStudentId} from './components/manageReports/reportsByStudent/reportsByStudentId';
 import {TakeTest} from './components/manageTests/takeTest/takeTest';
+import {ReportByStudentId} from './components/manageReports/reportsByStudent/reportsByStudentId';
 
 
 
