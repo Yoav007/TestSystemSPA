@@ -2,33 +2,34 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom"
 import { QuestionService } from "../../../services/questionService";
 import { TestService } from "../../../services/testService";
+import './editTest.scss';
 
 export function EditTest() {
 
     const params = useParams();
     const testService = new TestService();
-    const questionService = new QuestionService();    
+    const questionService = new QuestionService();
     const navigate = useNavigate();
     const [test, setTest] = useState(null);
     const [allQuestions, setAllQuestions] = useState([]);
     const [testQuestions, setQuestions] = useState([]);
-    const [active, setActive] = useState(test.isActive);
-    const [testName, setName] = useState(test.name);
-    const [introText, setIntro] = useState(test.intro);
-    const [authorEmail, setEmail] = useState(test.authorEmail);
-    const [passingGrade, setGrade] = useState(test.passingGrade);
-    const [successText, setSuccess] = useState(test.successText);
-    const [failureText, setFailure]= useState(test.failureText);
-        
+    const [active, setActive] = useState(false);
+    const [testName, setName] = useState("");
+    const [introText, setIntro] = useState("");
+    const [authorEmail, setEmail] = useState("");
+    const [passingGrade, setGrade] = useState(0);
+    const [successText, setSuccess] = useState("");
+    const [failureText, setFailure] = useState("");
+
     useEffect(() => {
         testService.getById(params.id)
-            .then(t => {
-                console.log(t);
-                setTest(t);
+            .then(data => {
+                console.log(data);
+                setTest(data);
             });
     }, []);
-    
-    useEffect(()=> {
+
+    useEffect(() => {
         console.log(params);
         questionService.get().then(data => {
             if (data) {
@@ -53,42 +54,42 @@ export function EditTest() {
         setQuestions([...coppy]);
         console.log(allQuestions);
     }
-    
-    function updateFailure(event){
+
+    function updateFailure(event) {
         let failure = event.target.value;
         setFailure(failure);
     }
 
-    function updateSuccess(event){
+    function updateSuccess(event) {
         let success = event.target.value;
         setSuccess(success);
     }
 
-    function updateEmail(event){
+    function updateEmail(event) {
         let Email = event.target.value;
         setEmail(Email);
     }
 
-    function updateName(event){        
+    function updateName(event) {
         let name = event.target.value;
         setName(name);
     }
 
-    function updateIntro(event){
+    function updateIntro(event) {
         let intro = event.target.value;
         setIntro(intro);
     }
 
-    function updateGrade(event){
+    function updateGrade(event) {
         let grade = event.target.value;
         setGrade(grade);
     }
 
-    function updateActive(event){
+    function updateActive(event) {
         let active = event.target.value;
         setActive(!active);
     }
-       
+
     function editTest() {
         let updateTest = {
             id: test.id,
@@ -105,10 +106,10 @@ export function EditTest() {
             lastUpdate: getDate()
         }
         testService.put(updateTest.id, updateTest)
-       .then( navigate("/manageTests/" + params.topicId.toString()));
+            .then(navigate("/manageTests/" + params.topicId.toString()));
     }
 
-    function getDate(){
+    function getDate() {
         const date = new Date();
         let year = date.getFullYear();
         let month = date.getMonth();
@@ -126,43 +127,45 @@ export function EditTest() {
 
     if (!test) return <h3>can't find the test</h3>
     return (
-        <div>
+        <div className="render">
             <h2>edit test page</h2>
-            <div>
-                <label>
-                    Name:
-                    <input type="text" defaultValue={test.name} onChange={(event)=>updateName(event)}/>
-                </label>
+            <div className="leftSide">
+                <div>
+                    <label>
+                        Name:
+                        <input type="text" defaultValue={test.name} onChange={(event) => updateName(event)} />
+                    </label>
+                </div>
+                <br />
+                <div>
+                    <label>
+                        Test Introdaction:
+                        <input type="textarea" defaultValue={test.intro} onChange={(event) => updateIntro(event)} />
+                    </label>
+                </div>
+                <br />
+                <div>
+                    <div>
+                        <label>
+                            author Email:
+                            <input type={"email"} defaultValue={test.authorEmail} onChange={(event) => updateEmail(event)} />
+                        </label>
+                    </div>
+                    <br />
+                    <label>
+                        Passing grade:
+                        <input type="number" defaultValue={test.passingGrade} placeholder='numbers only' onChange={(event) => updateGrade(event)} />
+                    </label>
+                </div>
+                <br />
+                <div>
+                    <label>
+                        isActive?
+                        <input type="checkbox" defaultValue={test.isActive} selected={active} onChange={(event) => updateActive(event)} />
+                    </label>
+                </div>
             </div>
-            <br/>
             <div>
-                <label>
-                    Test Introdaction:
-                    <input type="textarea" defaultValue={test.intro} onChange={(event)=>updateIntro(event)}/>                    
-                </label>
-            </div>
-            <br/>
-            <div>
-            <div>
-                <label>
-                    author Email:
-                    <input type={"email"} defaultValue={test.authorEmail} onChange={(event)=>updateEmail(event)}/>                    
-                </label>
-            </div>
-            <br/>
-                <label>
-                    Passing grade:
-                    <input type="number" defaultValue={test.passingGrade} placeholder='numbers only' onChange={(event)=>updateGrade(event)} />
-                </label>
-            </div>
-            <br />
-            <div>
-                <label>
-                isActive?
-                <input type="checkbox" defaultValue={test.isActive} selected={active} onChange={(event)=>updateActive(event)}/>
-                </label>
-            </div>
-            <div> 
                 <h4>questions (click to add)</h4>
                 <table className="table" align="center">
                     <thead>
@@ -171,28 +174,28 @@ export function EditTest() {
                         </tr>
                     </thead>
                     <tbody>
-                        {allQuestions.map((question)=>                        
-                        <tr key={question.id} onClick={()=>addToTest(question.id)}
-                        style={{background: testQuestions.includes(question)? 'yellow' : 'white'}}>
-                            <td>{question.text}</td>
-                        </tr>)}
+                        {allQuestions.map((question) =>
+                            <tr key={question.id} onClick={() => addToTest(question.id)}
+                                style={{ background: testQuestions.includes(question) ? 'yellow' : 'white' }}>
+                                <td>{question.text}</td>
+                            </tr>)}
                     </tbody>
                 </table>
             </div>
             <div>
                 <label>
                     success text message:
-                    <input type="text" defaultValue={test.successText} onChange={(event)=>updateSuccess(event)}/>
+                    <input type="text" defaultValue={test.successText} onChange={(event) => updateSuccess(event)} />
                 </label>
             </div>
-            <br/>
+            <br />
             <div>
                 <label>
                     failure text message:
-                    <input type="text" defaultValue={test.failureText} onChange={(event)=>updateFailure(event)}/>
+                    <input type="text" defaultValue={test.failureText} onChange={(event) => updateFailure(event)} />
                 </label>
             </div>
-            <br/>
+            <br />
             <button onClick={() => editTest()}>Edit</button>
             <button onClick={() => back()}>back</button>
         </div>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import TopicService from "../../services/topicService";
+import './mainMenu.scss'
 
 export function MainMenu() {
 
