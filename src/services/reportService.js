@@ -17,12 +17,12 @@ export class ReportService {
             .catch(this.failure)
     }
 
-    getStudents(){
-        return axios.get("http://localhost:4040/reports/byStudent/")
-        .then(function (response){
-            return response.data})
-        .catch(this.failure)
-    }
+    // getStudents(){
+    //     return axios.get("http://localhost:4040/reports/byStudent/")
+    //     .then(function (response){
+    //         return response.data})
+    //     .catch(this.failure)
+    // }
     
     getResultByStudentId(id){
         return axios.get ("http://localhost:4040/reports/byStudent/" +id)

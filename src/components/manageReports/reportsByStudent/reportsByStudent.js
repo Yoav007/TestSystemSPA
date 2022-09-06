@@ -1,24 +1,23 @@
-import { useParams } from "react-router-dom"
+import { Navigate, useParams } from "react-router-dom"
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { TestService } from "../../../services/testService.js";
 import { ReportService } from "../../../services/reportService.js";
 import "./reportsByStudent.scss";
+import { StudentService } from "../../../services/studentService.js";
 
 export function ReportByStudent() {
 
-    
-    const params = useParams();
-    const reportService = new ReportService();
-    const testService = new TestService();
+    const studentService = new StudentService();
     const [students, setStudents] = useState([]);
     const [student, setStudent] = useState();
     const [show, setShow] = useState();
-    const [results, setResults] = useState([]);
+    const navigate = useNavigate();
+
 
 
     useEffect(() => {
-        reportService.getStudents().then(data => {
+        studentService.get().then(data => {
             console.log(data);
             if (data) {
                 setStudents(data);
@@ -28,61 +27,46 @@ export function ReportByStudent() {
 
     function selectStudent(event) {
         let inputText = (event.target.value);
-        let relevantStudent = students.filter((student) => student.id == inputText);
+        console.log(students);
+        let relevantStudent = students.find((student) => student.id == inputText);
+        console.log(relevantStudent);
         setStudent(relevantStudent);
         if (!show) setShow(true);
-        reportService.getResultByStudentId(event.target.value).then((data) => {
-        let selectedStudent = data
-        console.log(selectedStudent);
-        setResults(selectedStudent);
-        })
-
-    }
-    function getTestName(id) {
-        let testName;
-        testService.getById(id).then((data)=>{
-        testName = data.name;
-        console.log(testName);
-        })
-        return testName
+    //     reportService.getResultByStudentId(event.target.value).then((data) => {
+    //     let selectedResults = data;
+    //     console.log(selectedResults);
+    //     setResults(selectedResults);
+    // })
+    // testService.get().then(data=>{
+    //     let name;
+    //     let t;
+    //     t = data.find((test)=> test.id == student.id)
+    //     name = t.name;
+    //     setTname(name);
+    //     })
     }
 
-    function getStudentName(id){
-        if(student.id ==id)
-        return student.name
-    }
+   function goToStudentReport(){
+    navigate ("/reports/byStudent/" + student.id);
+   }
 
     if (students) {
         return (
             <section>
                 <h1>Report By Student</h1>
                 <input type="text" placeholder="Enter student ID" onChange={(e) => selectStudent(e)} />
-                <button onClick={(e) => selectStudent(e)}>Enter</button>
                 <div style={{ visibility: show ? '' : 'hidden' }}>
-                    <h3>Select a test:</h3>
-                    <table align="center">
-                        <thead>
-                            <tr>
-                                <th>Student ID</th>
-                                <th>Student Name</th>
-                                <th>Test ID</th>
-                                <th>Test Name</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {results.map((result, index) =>
-                                <tr key={index}>
-                                    <td align="center">{result.studentId}</td>
-                                    <td align="center">{getTestName(result.testId)}</td>
-                                    <td align="center">{result.testId}</td>
-                                    <td align="center">{getStudentName(result.studentId)}</td>
-                                    
-                                </tr>
+                    <h3>Student Information</h3>
+                     
+                    {student? <div align="center">
+                        <h4>ID: {student.id}</h4>
+                        <h4>First Name: {student.firstName}</h4>
+                        <h4>Last Name: {student.lastName}</h4>
+                         <h4>Email: {student.email}</h4>
 
-                            )}
-                        </tbody>
-                    </table>
-
+                         <button onClick={() => goToStudentReport()}>Go To Student Reports</button>
+                    </div> :<></>}
+                   
                 </div>
             </section>
         )
