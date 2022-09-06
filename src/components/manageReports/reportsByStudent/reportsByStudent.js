@@ -32,18 +32,6 @@ export function ReportByStudent() {
         console.log(relevantStudent);
         setStudent(relevantStudent);
         if (!show) setShow(true);
-    //     reportService.getResultByStudentId(event.target.value).then((data) => {
-    //     let selectedResults = data;
-    //     console.log(selectedResults);
-    //     setResults(selectedResults);
-    // })
-    // testService.get().then(data=>{
-    //     let name;
-    //     let t;
-    //     t = data.find((test)=> test.id == student.id)
-    //     name = t.name;
-    //     setTname(name);
-    //     })
     }
 
    function goToStudentReport(){

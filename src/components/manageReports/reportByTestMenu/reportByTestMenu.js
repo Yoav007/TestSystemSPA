@@ -1,11 +1,8 @@
 import { useParams } from "react-router-dom"
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import TopicService from "../../../services/topicService.js";
 import { TestService } from "../../../services/testService.js";
 import { ReportService } from "../../../services/reportService.js";
-import { StudentService } from "../../../services/studentService.js";
-
 
 
 export function ReportByTestMenu() {
@@ -15,11 +12,10 @@ export function ReportByTestMenu() {
     const [testId, setId] = useState();
     const testService = new TestService();
     const reportService = new ReportService();
-    const studentService = new StudentService();
     const [show, setShow] = useState();
     const params = useParams();
     const [test, setTest] = useState({ name: '', passingGrade: '', questionsIdCollection: [] });
-    const [students, setStudents] = useState();
+    // const [students, setStudents] = useState();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -42,11 +38,11 @@ export function ReportByTestMenu() {
         reportService.getResultByTestId(event.target.value).then(data => {
             console.log(data);
             setResults(data);
-        });
-        studentService.getStudentsByTestId(event.target.value).then(data => {
-            console.log(data);
-            setStudents(data);
         })
+        // studentService.getStudentsByTestId(event.target.value).then(data => {
+        //     console.log(data);
+        //     setStudents(data);
+        // })
     }
 
     function getAverage() {
@@ -59,7 +55,7 @@ export function ReportByTestMenu() {
     }
 
     function back() {
-        navigate("/reports")
+        navigate("/reports/:id")
     }
 
     if (tests) {
@@ -80,31 +76,6 @@ export function ReportByTestMenu() {
                     <h5>Number of Questions: {test.questionsIdCollection.length}</h5>
                     <h5>Number of Submitions: {testResults.length}</h5>
                     <h5>Average Grade: {getAverage()}</h5>
-               
-                <h3>Respondent Grade and Answers</h3>
-                <table align="center">
-                    <thead>
-                        <tr>
-                            <th>Student ID</th>
-                            <th>Student Name</th>
-                            <th>Number of Questions Answered</th>
-                            <th>Number of Correct Answers</th>
-                            <th>Grade</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {students.map((student, index) =>
-                            <tr key={index}>
-                                <td>{student.id}</td>
-                                <td>{student.name}</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        )}
-                    </tbody>
-                </table>
-
                 </div>
                 <button onClick={() => back()}>back</button>
             </>
