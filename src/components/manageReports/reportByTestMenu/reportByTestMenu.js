@@ -20,6 +20,7 @@ export function ReportByTestMenu() {
     const params = useParams();
     const [test, setTest] = useState({ name: '', passingGrade: '', questionsIdCollection: [] });
     const [students, setStudents] = useState();
+    const navigate = useNavigate();
 
     useEffect(() => {
 
@@ -57,6 +58,10 @@ export function ReportByTestMenu() {
         return res;
     }
 
+    function back() {
+        navigate("/reports")
+    }
+
     if (tests) {
         return (
             <>
@@ -88,7 +93,7 @@ export function ReportByTestMenu() {
                         </tr>
                     </thead>
                     <tbody>
-                        {/* {students.map((student, index) =>
+                        {students.map((student, index) =>
                             <tr key={index}>
                                 <td>{student.id}</td>
                                 <td>{student.name}</td>
@@ -96,11 +101,12 @@ export function ReportByTestMenu() {
                                 <td></td>
                                 <td></td>
                             </tr>
-                        )} */}
+                        )}
                     </tbody>
                 </table>
 
                 </div>
+                <button onClick={() => back()}>back</button>
             </>
         )
     }
