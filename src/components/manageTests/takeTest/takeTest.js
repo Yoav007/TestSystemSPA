@@ -24,8 +24,8 @@ export function TakeTest() {
     }
 
     function stratTest() {
+        let student;
         if (firstName != "" && lastName != "" && email != "") {
-            let student;
             service.get()
                 .then(res => res.filter(s => s.email.toLowerCase() === email.toLowerCase()))
                 .catch(error=>console.log(error));
@@ -51,6 +51,7 @@ export function TakeTest() {
                 Email:
                 <input type={'email'} onChange={(event) => updateEmail(event)} />
             </label>
+            <br/>
             <button onClick={() => stratTest()}>Start Test</button>
         </div>
     )

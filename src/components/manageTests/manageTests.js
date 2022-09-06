@@ -73,7 +73,7 @@ export function ManageTests() {
                                 <td>{test.id}</td>
                                 <td align="center">{test.name}</td>
                                 <td align="center">{test.questionsIdCollection.length}</td>
-                                {/*type of test*/}      <td align="center">{test.topicId}</td>
+                                <td align="center">{test.topicId}</td>
                                 <td align="center">{test.version}</td>
                                 <td align="center">{test.isActive ? "" : <button onClick={() => edit(test.id)}>Edit</button>}
                                     {test.isActive ? "" : <button onClick={() => deleteTest(test.id)}>delete</button>}
