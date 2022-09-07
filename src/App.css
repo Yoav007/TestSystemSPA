@@ -3,13 +3,11 @@
   font-family: cursive
 }
 
-select{
+select, option{
   font-style: italic;
   cursor: pointer;
-}
-
-button{  
-  font-style: italic;
+  width: 10%;
+  border-radius: 4px;
 }
 
 body{
@@ -26,8 +24,9 @@ h1,h2,h3,h4,h5,h6{
 
 button{
   background-color: #ff608f;
-  border-radius: 20%;
+  border-radius: 5px;
   cursor: pointer;
+  font-style: italic;
 }
 
 .App-logo {
